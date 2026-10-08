@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Description>SVG Math and Scientific reports in SVG/Html with zero-dependency</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>Math;Plot;Graph;Scientific;Reports;BarChart;PointPlot;Chart;SVG;HTML;C#;.NET</PackageTags>
+		<PackageProjectUrl>https://github.com/samuel-vidal/Luminy</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Title>Luminy</Title>
+		<Authors>Samuel Alexandre Vidal</Authors>
+		<Copyright>Copyright (c) 2026 Samuel Alexandre Vidal</Copyright>
+		<RepositoryUrl>https://github.com/samuel-vidal/Luminy.git</RepositoryUrl>
+		<PackageReleaseNotes>First Release.</PackageReleaseNotes>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" Version="6.0.2" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+		<PackageReference Include="NUnit" Version="4.2.2" />
+		<PackageReference Include="NUnit.Analyzers" Version="4.4.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Luminy\Luminy.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="NUnit.Framework" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Reports\" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\" />
+		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+</Project>
