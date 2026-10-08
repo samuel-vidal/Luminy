@@ -4,11 +4,20 @@ using System.Text;
 
 namespace Luminy.Model
 {
+    /// <summary>
+    /// A container for rendering one or more Displays as an HTML figure with responsive column layout.
+    /// </summary>
+    /// <param name="rootPath">The base directory where generated SVG files are saved.</param>
+    /// <param name="displays">The displays to include in this chart figure.</param>
     public class Chart(string rootPath, params Display[] displays)
     {
-        public Display[] Displays { get; } = displays ?? throw new ArgumentNullException(nameof(displays));
+        /// <summary> Gets the displays contained in this chart. </summary>
+        public Display[] Displays { get; } = displays;
+
+        /// <summary> Gets or sets the number of columns in the responsive grid (default is 2). </summary>
         public int Columns { get; set; } = 2;
 
+        /// <summary> Generates the HTML representation of this chart figure and writes SVGs to disk. </summary>
         public string ToHtml()
         {
             var html = new StringBuilder();

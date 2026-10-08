@@ -59,6 +59,7 @@ namespace Luminy.Builders
                 ("stroke-width", strokeWidth.ToString("F3")));
         }
 
+        /// <summary> Draws text at the specified coordinates with custom formatting. </summary>
         public void Text(string content, float x, float y,
             string? fontFamily = null,
             float? fontSize = null,
@@ -88,16 +89,19 @@ namespace Luminy.Builders
             }
         }
 
+        /// <summary> Opens a group element (&lt;g&gt;). </summary>
         public IDisposable OpenGroup()
         {
             return OpenTag("g");
         }
 
+        /// <summary> Opens a clipPath element with the specified identifier. </summary>
         public IDisposable OpenClipPath(string id)
         {
             return OpenTag("clipPath", ("id", id));
         }
 
+        /// <summary> Uses a clipPath definition by identifier. </summary>
         public void UseClipPath(string id)
         {
             Tag("clipPath", ("id", id));

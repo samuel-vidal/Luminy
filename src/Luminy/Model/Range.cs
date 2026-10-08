@@ -1,10 +1,16 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace Luminy.Model
 {
+    /// <summary>
+    /// Represents a 1D numerical interval [Min, Max].
+    /// </summary>
     public record Range(float Min, float Max)
     {
+        /// <summary>
+        /// Combines multiple ranges into a single enclosing range.
+        /// </summary>
         public static Range Combine(params Range[] ranges)
         {
             if (ranges.Length == 0) return new Range(0, 0);

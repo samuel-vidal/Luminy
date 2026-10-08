@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Luminy.Builders
 {
+    /// <summary>
+    /// Base builder for generating formatted XML/SVG elements with disposable tags.
+    /// </summary>
     public class XmlBuilder
     {
         protected readonly StringBuilder sb = new();
@@ -18,6 +21,7 @@ namespace Luminy.Builders
                 .Replace("'", "&apos;");
         }
 
+        /// <summary> Appends a self-closing XML tag with attributes. </summary>
         public void Tag(string name, params (string key, string value)[] attributes)
         {
             sb.Append($"<{name}");
@@ -28,6 +32,7 @@ namespace Luminy.Builders
             sb.Append("/>");
         }
 
+        /// <summary> Opens an XML tag with attributes and returns an IDisposable that closes the tag. </summary>
         public IDisposable OpenTag(string name, params (string key, string value)[] attributes)
         {
             sb.Append($"<{name}");
@@ -40,8 +45,10 @@ namespace Luminy.Builders
             return new AnonymousDisposable(() => sb.Append($"</{name}>"));
         }
 
+        /// <summary> Appends XML-escaped text content. </summary>
         public void Append(string text) => sb.Append(EscapeXml(text));
 
+        /// <summary> Returns the generated XML string. </summary>
         public override string ToString() => sb.ToString();
     }
 }

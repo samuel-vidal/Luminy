@@ -1,4 +1,4 @@
-# Luminy 🌠
+# Luminy 🌟
 
 **Elegant SVG math plotting and scientific HTML reports for .NET — zero external dependencies.**
 
@@ -82,7 +82,7 @@ new ReportBuilder(outputDir, "experiment_report.html")
     .AddTitle("Harmonic Signal Analysis")
     .AddSection("Visual Spectrum")
     .AddParagraph("The following chart illustrates the phase relationship between sine and cosine signals.")
-    .AddChart(new Chart(outputDir, display) { Columns = 1 }, "Figure 1: Trigonometric Comparison")
+    .AddChart(display, "Figure 1: Trigonometric Comparison")
     .AddSection("Key Metrics")
     .AddTable(new[,] {
         { "Metric", "Value" },

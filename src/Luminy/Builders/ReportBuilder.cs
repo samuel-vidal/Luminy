@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Luminy.Model;
 using System.Text;
 
@@ -13,7 +14,6 @@ namespace Luminy.Builders
         private readonly string rootPath;
         private readonly string fileName;
         private readonly StringBuilder html = new();
-        private readonly List<string> resourceFiles = new();
 
         /// <summary>
         /// Initializes a new instance of the ReportBuilder.
@@ -62,6 +62,7 @@ namespace Luminy.Builders
             return this;
         }
 
+        /// <summary> Adds a level-3 subsection header to the report. </summary>
         public ReportBuilder AddSubsection(string title)
         {
             html.AppendLine($"<h3>{EscapeHtml(title)}</h3>");
@@ -75,6 +76,7 @@ namespace Luminy.Builders
             return this;
         }
 
+        /// <summary> Adds a formatted code block with optional syntax language to the report. </summary>
         public ReportBuilder AddCodeBlock(string code, string language = "")
         {
             html.AppendLine("<pre>");
@@ -135,6 +137,27 @@ namespace Luminy.Builders
             return this;
         }
 
+        /// <summary> Adds a single display directly as a chart figure to the report. </summary>
+        public ReportBuilder AddChart(Display display, string caption = "")
+        {
+            return AddChart(new Chart(rootPath, display), caption);
+        }
+
+        /// <summary> Adds multiple displays arranged in columns as a chart figure to the report. </summary>
+        public ReportBuilder AddChart(IEnumerable<Display> displays, int columns = 2, string caption = "")
+        {
+            var chart = new Chart(rootPath, displays.ToArray()) { Columns = columns };
+            return AddChart(chart, caption);
+        }
+
+        /// <summary> Adds multiple displays arranged in columns as a chart figure to the report. </summary>
+        public ReportBuilder AddChart(string caption, int columns, params Display[] displays)
+        {
+            var chart = new Chart(rootPath, displays) { Columns = columns };
+            return AddChart(chart, caption);
+        }
+
+        /// <summary> Adds an image to the report. </summary>
         public ReportBuilder AddImage(string imagePath, string altText = "", string caption = "")
         {
             html.AppendLine("<figure>");
@@ -147,6 +170,7 @@ namespace Luminy.Builders
             return this;
         }
 
+        /// <summary> Adds an ordered or unordered list of items to the report. </summary>
         public ReportBuilder AddList(IEnumerable<string> items, bool ordered = false)
         {
             var tag = ordered ? "ol" : "ul";

@@ -4,7 +4,7 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Description>SVG Math and Scientific reports in SVG/Html with zero-dependency</Description>
+		<Description>Math and Scientific reports in SVG/Html with zero-dependency</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>Math;Plot;Graph;Scientific;Reports;BarChart;PointPlot;Chart;SVG;HTML;C#;.NET</PackageTags>
 		<PackageProjectUrl>https://github.com/samuel-vidal/Luminy</PackageProjectUrl>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using Luminy.Builders;
@@ -71,6 +72,12 @@ namespace Luminy.Model
         Range? YRange = null
     )
     {
+        /// <summary>
+        /// Initializes a new Display containing the specified plots with default settings.
+        /// </summary>
+        /// <param name="plots">The plots to include in this display.</param>
+        public Display(params Plot[] plots) : this(plots.ToImmutableArray()) { }
+
         /// <summary>
         /// Renders the visualization to an SVG string.
         /// </summary>

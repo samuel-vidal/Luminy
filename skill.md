@@ -71,9 +71,7 @@ public class LuminyExample
         
         new ReportBuilder(outputDir, "math_report.html")
             .AddTitle("Mathematical Analysis")
-            .AddParagraph("The following chart displays the sine and cosine functions.")
-            // Chart takes the output directory so it can save the SVG alongside the HTML
-            .AddChart(new Chart(outputDir, display) { Columns = 1 })
+            .AddChart(display)
             .Build(); // Writes the HTML and SVG files to disk immediately
     }
 }
