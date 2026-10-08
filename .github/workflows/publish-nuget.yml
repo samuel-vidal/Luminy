@@ -1,7 +1,5 @@
 name: NuGet Publish Workflow
 
-# 
-
 # Defines the triggers for this workflow
 on:
   # 1. Automatic Trigger (Recommended): Runs when a new tag like 'v1.2.3' is pushed.
@@ -20,6 +18,9 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     
     steps:
     - name: Checkout code
@@ -47,7 +48,6 @@ jobs:
         fi
         echo "PACKAGE_VERSION=$VERSION" >> $GITHUB_OUTPUT
             
-        
     - name: Restore dependencies
       run: dotnet restore
       
@@ -57,5 +57,11 @@ jobs:
     - name: Build and Pack the NuGet package
       run: dotnet pack --configuration Release --no-build --output ./nupkg /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
       
+    - name: NuGet Login (Trusted Publishing)
+      id: nuget_login
+      uses: NuGet/login@v1
+      with:
+        user: Samuel-Vidal
+
     - name: Publish to NuGet.org
-      run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+      run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key "${{ steps.nuget_login.outputs.NUGET_API_KEY }}" --skip-duplicate
