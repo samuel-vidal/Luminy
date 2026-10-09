@@ -19,7 +19,16 @@ Luminy is a lightweight, standalone .NET library designed for generating high-qu
 - **📈 Scientific First**: Built-in linear and logarithmic scales, "nice" tick calculation, multi-series auto-coloring, and statistical summaries.
 - **✨ Idiomatic C#**: Immutable records, non-destructive mutation (`with`), primary constructors, and fluent document builders.
 - **📑 Integrated HTML Reports**: Directly generate publication-ready HTML documents with structured headings, paragraphs, formatted tables, code blocks, and responsive chart grids.
+- **⚡ High-Performance Tensor Imaging**: Zero-dependency 8-bit indexed PNG encoder (LUT256) and unmanaged cache-aligned buffers (`BitmapBuffer`) for ultra-compact AI heatmaps.
 - **🐧 100% Cross-Platform**: Runs natively on Linux, macOS, and Windows with zero configuration.
+
+---
+
+## 🤖 AI Friendly!
+
+Check our short and sweet skill files designed for LLMs, coding agents, and quick developer reference:
+- [**Plotting & Scientific Reports Skill**](skill.md) — Vector SVG charts, composable displays, and HTML research documents.
+- [**Imaging & Tensor Heatmaps Skill**](imaging_skill.md) — Unmanaged aligned buffers (`BitmapBuffer<TPixel>`) and high-performance 8-bit indexed PNG encoding (LUT256).
 
 ---
 
