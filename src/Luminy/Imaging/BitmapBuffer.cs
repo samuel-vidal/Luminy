@@ -1,6 +1,7 @@
 namespace Luminy.Imaging
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
 
@@ -25,25 +26,29 @@ namespace Luminy.Imaging
         public nint Stride => byteStride;
 
         /// <summary> Gets the raw pointer to the first pixel. </summary>
-        public TPixel* Pointer => pointer;
+        public TPixel* Pointer
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => pointer;
+        }
 
         /// <summary>
         /// Initializes a new instance of <see cref="BitmapBuffer{TPixel}"/> with aligned unmanaged memory.
         /// </summary>
         /// <param name="width">The width in pixels.</param>
         /// <param name="height">The height in pixels.</param>
-        /// <param name="alignment">Memory alignment in bytes (default 64 bytes).</param>
-        public BitmapBuffer(nint width, nint height, uint alignment = 64)
+        /// <param name="byteAlignment">Memory alignment in bytes (default 64 bytes).</param>
+        public BitmapBuffer(nint width, nint height, uint byteAlignment = 64)
         {
             Width = width;
             Height = height;
 
             var rowBytes = width * sizeof(TPixel);
-            var align = (nint)alignment;
+            var align = (nint)byteAlignment;
             byteStride = (rowBytes + (align - 1)) & ~(align - 1);
 
             var totalBytes = (nuint)(byteStride * height);
-            pointer = (TPixel*)NativeMemory.AlignedAlloc(totalBytes, alignment);
+            pointer = (TPixel*)NativeMemory.AlignedAlloc(totalBytes, byteAlignment);
             NativeMemory.Clear(pointer, totalBytes);
         }
 
@@ -57,8 +62,29 @@ namespace Luminy.Imaging
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
+                CheckAccess(u, v);
                 var row = (byte*)pointer + (v * byteStride);
                 return ref ((TPixel*)row)[u];
+            }
+        }
+
+        [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void CheckAccess(nint u, nint v)
+        {
+            if (pointer == null)
+            {
+                throw new ObjectDisposedException(nameof(BitmapBuffer<TPixel>));
+            }
+
+            if (u < 0 || u >= Width)
+            {
+                throw new ArgumentOutOfRangeException(nameof(u), $"Coordinate u ({u}) must be in range [0, {Width}).");
+            }
+
+            if (v < 0 || v >= Height)
+            {
+                throw new ArgumentOutOfRangeException(nameof(v), $"Coordinate v ({v}) must be in range [0, {Height}).");
             }
         }
 

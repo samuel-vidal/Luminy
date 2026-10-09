@@ -4,8 +4,9 @@ namespace Luminy.Imaging
     using Luminy.Model;
 
     /// <summary>
-    /// Represents a color scale defined by piece-wise linear interpolation between gradient control points.
-    /// Steps must be sorted in ascending order by their <see cref="GradientStep.Value"/>.
+    /// Represents a normalized color scale over the [0.0, 1.0] range, defined by piece-wise linear
+    /// interpolation between gradient control points. Steps must be sorted in ascending order by their
+    /// <see cref="GradientStep.Value"/>.
     /// </summary>
     public sealed record ColorScale
     {
@@ -28,9 +29,9 @@ namespace Luminy.Imaging
         }
 
         /// <summary>
-        /// Evaluates the interpolated color at a given value using binary search interpolation.
+        /// Evaluates the interpolated color at a given normalized position using binary search interpolation.
         /// </summary>
-        /// <param name="value">The value along the gradient scale.</param>
+        /// <param name="value">The normalized position [0.0, 1.0] along the gradient scale.</param>
         public Color this[float value]
         {
             get
@@ -101,6 +102,49 @@ namespace Luminy.Imaging
             new GradientStep(0.50f, new Color(0.733f, 0.224f, 0.337f)),
             new GradientStep(0.75f, new Color(0.969f, 0.584f, 0.118f)),
             new GradientStep(1.00f, new Color(0.988f, 1.000f, 0.643f))
+        );
+
+        /// <summary>
+        /// Linear grayscale colormap from black to white.
+        /// </summary>
+        public static ColorScale Grayscale { get; } = new(
+            new GradientStep(0f, Color.Black),
+            new GradientStep(1f, Color.White)
+        );
+
+        /// <summary>
+        /// Perceptually uniform colormap from deep violet to teal, green, and bright yellow.
+        /// </summary>
+        public static ColorScale Viridis { get; } = new(
+            new GradientStep(0.00f, new Color(0.267f, 0.004f, 0.329f)),
+            new GradientStep(0.25f, new Color(0.231f, 0.322f, 0.545f)),
+            new GradientStep(0.50f, new Color(0.129f, 0.569f, 0.553f)),
+            new GradientStep(0.75f, new Color(0.369f, 0.788f, 0.384f)),
+            new GradientStep(1.00f, new Color(0.993f, 0.906f, 0.145f))
+        );
+
+        /// <summary>
+        /// Perceptually uniform colormap from dark violet to magenta, orange, and bright yellow.
+        /// </summary>
+        public static ColorScale Plasma { get; } = new(
+            new GradientStep(0.00f, new Color(0.051f, 0.031f, 0.529f)),
+            new GradientStep(0.25f, new Color(0.494f, 0.012f, 0.659f)),
+            new GradientStep(0.50f, new Color(0.796f, 0.278f, 0.471f)),
+            new GradientStep(0.75f, new Color(0.973f, 0.584f, 0.255f)),
+            new GradientStep(1.00f, new Color(0.941f, 0.976f, 0.129f))
+        );
+
+        /// <summary>
+        /// High-contrast rainbow colormap with smooth transitions.
+        /// </summary>
+        public static ColorScale Turbo { get; } = new(
+            new GradientStep(0.00f, new Color(0.190f, 0.072f, 0.232f)),
+            new GradientStep(0.15f, new Color(0.176f, 0.428f, 0.887f)),
+            new GradientStep(0.35f, new Color(0.137f, 0.769f, 0.694f)),
+            new GradientStep(0.55f, new Color(0.635f, 0.890f, 0.212f)),
+            new GradientStep(0.75f, new Color(0.984f, 0.627f, 0.149f)),
+            new GradientStep(0.90f, new Color(0.898f, 0.263f, 0.071f)),
+            new GradientStep(1.00f, new Color(0.480f, 0.015f, 0.014f))
         );
     }
 }

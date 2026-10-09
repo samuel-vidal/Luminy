@@ -28,6 +28,10 @@ namespace Luminy.Tests
             Assert.That(ColorScale.Inferno.Steps.Length, Is.EqualTo(5));
             Assert.That(ColorScale.OrangeWhiteBlue.Steps.Length, Is.EqualTo(3));
             Assert.That(ColorScale.BlueWhite.Steps.Length, Is.EqualTo(2));
+            Assert.That(ColorScale.Grayscale.Steps.Length, Is.EqualTo(2));
+            Assert.That(ColorScale.Viridis.Steps.Length, Is.EqualTo(5));
+            Assert.That(ColorScale.Plasma.Steps.Length, Is.EqualTo(5));
+            Assert.That(ColorScale.Turbo.Steps.Length, Is.EqualTo(7));
 
             var midDiverging = ColorScale.OrangeWhiteBlue[0.5f];
             Assert.That(midDiverging.Red, Is.EqualTo(1f));
@@ -54,6 +58,22 @@ namespace Luminy.Tests
             Assert.That(buffer[99, 49], Is.EqualTo(255));
             Assert.That(buffer[0, 0], Is.EqualTo(0));
         }
+
+#if DEBUG
+        [Test]
+        public void BitmapBuffer_CheckAccess_ThrowsOnOutOfBoundsOrDisposed()
+        {
+            var buffer = new BitmapBuffer<byte>(10, 10);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => { var _ = buffer[-1, 0]; });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { var _ = buffer[10, 0]; });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { var _ = buffer[0, -1]; });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { var _ = buffer[0, 10]; });
+
+            buffer.Dispose();
+            Assert.Throws<ObjectDisposedException>(() => { var _ = buffer[0, 0]; });
+        }
+#endif
 
         [Test]
         public void PngColor_Creates256EntryLut()
