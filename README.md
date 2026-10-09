@@ -24,7 +24,7 @@ Luminy is a lightweight, standalone .NET library designed for generating high-qu
 
 ---
 
-## 🤖 AI Friendly!
+## 🧠 AI Friendly!
 
 Check our short and sweet skill files designed for LLMs, coding agents, and quick developer reference:
 - [**Plotting & Scientific Reports Skill**](skill.md) — Vector SVG charts, composable displays, and HTML research documents.
