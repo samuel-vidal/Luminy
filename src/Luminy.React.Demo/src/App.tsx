@@ -1,194 +1,96 @@
-import React, { useState, useMemo } from 'react';
-import { Display, LinePlot, AxesStyle } from 'luminy-react';
+import React, { useState } from 'react';
+import { LinePlotDemo } from './demos/LinePlotDemo';
+import { DonutPlotDemo } from './demos/DonutPlotDemo';
+import { PointPlotDemo } from './demos/PointPlotDemo';
+import { BarChartDemo } from './demos/BarChartDemo';
+
+export type DemoTab = 'line' | 'donut' | 'point' | 'bar';
+
+interface TabItem {
+  id: DemoTab;
+  name: string;
+  icon: string;
+  badge?: string;
+  description: string;
+}
+
+const TABS: TabItem[] = [
+  {
+    id: 'line',
+    name: 'LinePlot',
+    icon: '📈',
+    badge: 'Continuous',
+    description: 'Signals, waveforms & time-series curves'
+  },
+  {
+    id: 'donut',
+    name: 'DonutPlot',
+    icon: '🍩',
+    badge: 'Radial',
+    description: 'Proportional distributions, pie & donut charts'
+  },
+  {
+    id: 'point',
+    name: 'PointPlot',
+    icon: '🔵',
+    badge: 'Scatter',
+    description: 'Discrete coordinate scatter & multi-cluster plots'
+  },
+  {
+    id: 'bar',
+    name: 'BarChart',
+    icon: '📊',
+    badge: 'Categorical',
+    description: 'Discrete series, bars & financial histograms'
+  }
+];
 
 export const App: React.FC = () => {
-  const [frequency, setFrequency] = useState<number>(2.0);
-  const [amplitude, setAmplitude] = useState<number>(1.0);
-  const [noiseLevel, setNoiseLevel] = useState<number>(0.15);
-  const [samples, setSamples] = useState<number>(120);
-  const [showGrid, setShowGrid] = useState<boolean>(true);
-  const [showLegend, setShowLegend] = useState<boolean>(true);
-  const [showCos, setShowCos] = useState<boolean>(true);
-  const [axesStyle, setAxesStyle] = useState<AxesStyle>('frame');
-
-  // Generate reactive mathematical series
-  const { xData, sinData, cosData, noisyData } = useMemo(() => {
-    const x: number[] = [];
-    const sin: number[] = [];
-    const cos: number[] = [];
-    const noisy: number[] = [];
-
-    const step = (4 * Math.PI) / samples;
-    for (let i = 0; i <= samples; i++) {
-      const t = i * step;
-      x.push(t);
-      const pureSin = amplitude * Math.sin(frequency * t);
-      const pureCos = amplitude * Math.cos(frequency * t);
-      // Deterministic pseudo noise based on index
-      const noise = (Math.sin(i * 12.9898) * 43758.5453) % 1;
-      sin.push(pureSin);
-      cos.push(pureCos);
-      noisy.push(pureSin + (noise - 0.5) * 2 * noiseLevel);
-    }
-
-    return { xData: x, sinData: sin, cosData: cos, noisyData: noisy };
-  }, [frequency, amplitude, noiseLevel, samples]);
+  const [activeTab, setActiveTab] = useState<DemoTab>('line');
 
   return (
     <div className="app-container">
       <header className="header">
-        <h1>
-          Luminy.React <span className="badge">Proof of Concept</span>
-        </h1>
-        <p className="subtitle">
-          Pure vector mathematical visualization in React — Zero external graphics runtime.
-        </p>
+        <div className="header-brand">
+          <h1>
+            Luminy.React <span className="badge">Interactive Showcase</span>
+          </h1>
+          <p className="subtitle">
+            Pure vector mathematical visualization in React — Zero external graphics runtime.
+          </p>
+        </div>
+
+        {/* Tab Navigation */}
+        <nav className="tab-nav" aria-label="Plot Type Selector">
+          {TABS.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                className={`tab-button ${isActive ? 'active' : ''}`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                <span className="tab-icon">{tab.icon}</span>
+                <div className="tab-info">
+                  <div className="tab-header">
+                    <span className="tab-name">{tab.name}</span>
+                    {tab.badge && <span className="tab-badge">{tab.badge}</span>}
+                  </div>
+                  <span className="tab-desc">{tab.description}</span>
+                </div>
+              </button>
+            );
+          })}
+        </nav>
       </header>
 
-      <main className="showcase-grid">
-        {/* Controls */}
-        <aside className="control-panel">
-          <div className="control-group">
-            <label>
-              <span>Frequency (ω)</span>
-              <span>{frequency.toFixed(1)} rad/s</span>
-            </label>
-            <input
-              type="range"
-              min="0.5"
-              max="6.0"
-              step="0.1"
-              value={frequency}
-              onChange={(e) => setFrequency(parseFloat(e.target.value))}
-            />
-          </div>
-
-          <div className="control-group">
-            <label>
-              <span>Amplitude (A)</span>
-              <span>{amplitude.toFixed(2)}</span>
-            </label>
-            <input
-              type="range"
-              min="0.2"
-              max="3.0"
-              step="0.1"
-              value={amplitude}
-              onChange={(e) => setAmplitude(parseFloat(e.target.value))}
-            />
-          </div>
-
-          <div className="control-group">
-            <label>
-              <span>Noise Level (σ)</span>
-              <span>{noiseLevel.toFixed(2)}</span>
-            </label>
-            <input
-              type="range"
-              min="0.0"
-              max="1.0"
-              step="0.05"
-              value={noiseLevel}
-              onChange={(e) => setNoiseLevel(parseFloat(e.target.value))}
-            />
-          </div>
-
-          <div className="control-group">
-            <label>
-              <span>Sample Points (N)</span>
-              <span>{samples}</span>
-            </label>
-            <input
-              type="range"
-              min="20"
-              max="300"
-              step="10"
-              value={samples}
-              onChange={(e) => setSamples(parseInt(e.target.value, 10))}
-            />
-          </div>
-
-          <div className="control-group">
-            <label>Axes Style</label>
-            <select value={axesStyle} onChange={(e) => setAxesStyle(e.target.value as AxesStyle)}>
-              <option value="frame">Frame (Scientific)</option>
-              <option value="normal">Normal (Center 0,0)</option>
-              <option value="none">None (Clean)</option>
-            </select>
-          </div>
-
-          <div className="control-group">
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={showGrid}
-                onChange={(e) => setShowGrid(e.target.checked)}
-              />
-              Show Grid
-            </label>
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={showLegend}
-                onChange={(e) => setShowLegend(e.target.checked)}
-              />
-              Show Legend
-            </label>
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={showCos}
-                onChange={(e) => setShowCos(e.target.checked)}
-              />
-              Show Cosine Reference
-            </label>
-          </div>
-        </aside>
-
-        {/* Chart View */}
-        <section className="chart-card">
-          <Display
-            width={720}
-            height={460}
-            title={`Harmonic Oscillator (${frequency.toFixed(1)} rad/s)`}
-            xLabel="Time t (s)"
-            yLabel="Signal Amplitude"
-            showGrid={showGrid}
-            showLegend={showLegend}
-            axesStyle={axesStyle}
-          >
-            <LinePlot
-              x={xData}
-              y={noisyData}
-              label="Noisy Measurement"
-              color="#94a3b8"
-              strokeWidth={1.5}
-            />
-            <LinePlot
-              x={xData}
-              y={sinData}
-              label="Pure Sine"
-              color="#0284c7"
-              strokeWidth={2.5}
-            />
-            {showCos && (
-              <LinePlot
-                x={xData}
-                y={cosData}
-                label="Cosine Phase Ref"
-                color="#f97316"
-                strokeWidth={2}
-                strokeDasharray="4 4"
-              />
-            )}
-          </Display>
-
-          <div className="stats-bar">
-            <span>Points: <strong>{samples}</strong></span>
-            <span>Period: <strong>{( (2 * Math.PI) / frequency ).toFixed(2)}s</strong></span>
-            <span>Rendering: <strong>Pure SVG Virtual DOM (60 FPS)</strong></span>
-          </div>
-        </section>
+      {/* Main Content Area: Render active demo */}
+      <main className="tab-content">
+        {activeTab === 'line' && <LinePlotDemo />}
+        {activeTab === 'donut' && <DonutPlotDemo />}
+        {activeTab === 'point' && <PointPlotDemo />}
+        {activeTab === 'bar' && <BarChartDemo />}
       </main>
     </div>
   );
