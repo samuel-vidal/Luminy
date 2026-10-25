@@ -32,6 +32,17 @@ Check our short and sweet skill files designed for LLMs, coding agents, and quic
 
 ---
 
+## 📖 Documentation & Guides
+
+Explore the unified multi-platform documentation covering **.NET Core**, **WPF**, and **React**:
+
+- [**Documentation Hub**](docs/README.md) — Central overview, ecosystem architecture, and quick navigation.
+- [**Getting Started Guide**](docs/guide/getting-started.md) — Multi-platform installation and quickstarts.
+- [**Architecture & Design**](docs/guide/architecture.md) — Retained-mode scene graphs, synchronous inspection, and DRY algorithms.
+- [**Plot Types Catalog**](docs/README.md#-plot-types-catalog) — Comprehensive guides for [LinePlot](docs/plots/line_plot.md), [DonutPlot](docs/plots/donut_plot.md), [PointPlot](docs/plots/point_plot.md), [BarChart](docs/plots/bar_chart.md), [HistogramPlot](docs/plots/histogram_plot.md), [BoxPlot](docs/plots/box_plot.md), and [MatrixPlot](docs/plots/matrix_plot.md).
+
+---
+
 ## 💡 Quick Start
 
 ### 1. Create a Simple SVG Plot
