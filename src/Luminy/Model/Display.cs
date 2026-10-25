@@ -69,7 +69,8 @@ namespace Luminy.Model
         ScaleType XScaleType = ScaleType.Linear,
         ScaleType YScaleType = ScaleType.Linear,
         Range? XRange = null,
-        Range? YRange = null
+        Range? YRange = null,
+        Color? BackgroundColor = null
     )
     {
         /// <summary>
@@ -88,6 +89,13 @@ namespace Luminy.Model
 
             using (svg.OpenSvg(Width, Height))
             {
+                // Render background card if enabled
+                var bgColor = BackgroundColor ?? new Color(0.973f, 0.980f, 0.988f);
+                if (bgColor != Color.Transparent)
+                {
+                    svg.Rect(0, 0, Width, Height, fill: bgColor, stroke: new Color(0.89f, 0.91f, 0.94f), strokeWidth: 1f, rx: 8);
+                }
+
                 // Calculate data ranges
                 var ranges = Plots.Select(p => p.GetValueRange()).ToArray();
                 var xDataRange = Range.Combine(ranges.Select(r => r.xRange).ToArray());
@@ -351,7 +359,7 @@ namespace Luminy.Model
 
         private void DrawGrid(SvgBuilder svg, Range xRange, Range yRange, CoordinateMap coordinate)
         {
-            var gridColor = GridColor ?? new Color(0.9f, 0.9f, 0.9f);
+            var gridColor = GridColor ?? new Color(0.82f, 0.85f, 0.88f);
 
             // Draw grid lines at tick positions
             var xTicks = CalculateTicks(xRange);

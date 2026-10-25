@@ -25,7 +25,10 @@ namespace Luminy.Builders
         public int Inset { get; set; } = 20;
 
         /// <summary> Default grid color. </summary>
-        public Color GridColor { get; set; } = new(0.9f, 0.9f, 0.9f);
+        public Color GridColor { get; set; } = new(0.82f, 0.85f, 0.88f);
+
+        /// <summary> Default background card color. </summary>
+        public Color? BackgroundColor { get; set; } = new Color(0.973f, 0.980f, 0.988f);
 
         /// <summary> Whether to show the grid by default. </summary>
         public bool ShowGrid { get; set; } = false;
@@ -153,7 +156,8 @@ namespace Luminy.Builders
                 ShowGrid: ShowGrid,
                 GridColor: GridColor,
                 ShowLegend: ShowLegend,
-                LegendPosition: LegendPosition
+                LegendPosition: LegendPosition,
+                BackgroundColor: BackgroundColor
             );
         }
 
@@ -172,7 +176,8 @@ namespace Luminy.Builders
                 AxesStyle: AxesStyle.None,
                 ShowGrid: false,
                 ShowLegend: ShowLegend,
-                LegendPosition: LegendPosition
+                LegendPosition: LegendPosition,
+                BackgroundColor: BackgroundColor
             );
         }
 
