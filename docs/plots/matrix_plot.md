@@ -4,16 +4,9 @@
 
 ---
 
-## Visual Concept
+## Visual Preview
 
-```
-  Row (i) ▲
-        3 │ [ 0.1 ] [ 0.4 ] [ 0.9 ]
-        2 │ [ 0.3 ] [ 0.8 ] [ 0.5 ]
-        1 │ [ 0.7 ] [ 0.2 ] [ 0.1 ]
-          └────────────────────────► Col (j)
-              1       2       3
-```
+![MatrixPlot 2D Intensity Ripple Field](./matrix_plot.svg)
 
 ---
 
