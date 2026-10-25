@@ -3,4 +3,6 @@
   <Project Path="src/Luminy/Luminy.csproj" />
   <Project Path="src/Luminy.Wpf/Luminy.Wpf.csproj" />
   <Project Path="src/Luminy.Wpf.Demo/Luminy.Wpf.Demo.csproj" />
+  <Project Path="src/Luminy.React/Luminy.React.esproj" />
+  <Project Path="src/Luminy.React.Demo/Luminy.React.Demo.esproj" />
 </Solution>
