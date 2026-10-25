@@ -1,4 +1,6 @@
 <Solution>
   <Project Path="tests/Luminy.Tests/Luminy.Tests.csproj" Id="44cc8040-dec7-4fca-b53b-6d52e4ede47d" />
   <Project Path="src/Luminy/Luminy.csproj" />
+  <Project Path="src/Luminy.Wpf/Luminy.Wpf.csproj" />
+  <Project Path="src/Luminy.Wpf.Demo/Luminy.Wpf.Demo.csproj" />
 </Solution>

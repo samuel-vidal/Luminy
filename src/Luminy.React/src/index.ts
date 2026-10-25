@@ -1,0 +1,29 @@
+// Components
+export { Display } from './components/Display';
+export type { DisplayProps } from './components/Display';
+
+export { LinePlot } from './components/LinePlot';
+export type { LinePlotProps } from './components/LinePlot';
+
+// Context & Hooks
+export { useDisplayContext } from './context/DisplayContext';
+export type { DisplayContextValue } from './context/DisplayContext';
+
+// Types
+export type {
+  Range,
+  CoordinateMap,
+  AxesStyle,
+  ScaleType,
+  LegendPosition,
+  BasePlotProps,
+  LegendItem,
+  PlotComponent,
+  PlotElement,
+  PlotChildren
+} from './types';
+
+// Utilities
+export { calculateNiceTicks, formatTickLabel } from './utils/ticks';
+export { getArrayRange, combineRanges } from './utils/range';
+export { DEFAULT_PALETTE } from './utils/palette';

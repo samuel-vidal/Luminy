@@ -111,3 +111,5 @@ tests/**/Reports/
 !LICENSE.txt
 
 /Design
+node_modules/
+dist/
