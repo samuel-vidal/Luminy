@@ -5,6 +5,15 @@ export type { DisplayProps } from './components/Display';
 export { LinePlot } from './components/LinePlot';
 export type { LinePlotProps } from './components/LinePlot';
 
+export { DonutPlot } from './components/DonutPlot';
+export type { DonutPlotProps } from './components/DonutPlot';
+
+export { PointPlot } from './components/PointPlot';
+export type { PointPlotProps } from './components/PointPlot';
+
+export { BarChart, calculateDefaultBarWidth } from './components/BarChart';
+export type { BarChartProps } from './components/BarChart';
+
 // Context & Hooks
 export { useDisplayContext } from './context/DisplayContext';
 export type { DisplayContextValue } from './context/DisplayContext';
