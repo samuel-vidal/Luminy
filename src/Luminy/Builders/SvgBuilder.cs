@@ -16,17 +16,27 @@ namespace Luminy.Builders
                 ("xmlns", "http://www.w3.org/2000/svg"));
         }
 
-        /// <summary> Draws a rectangle. </summary>
-        public void Rect(float x, float y, float width, float height, Color? fill = null, Color? stroke = null, float strokeWidth = 1f)
+        /// <summary> Draws a rectangle with optional rounded corners. </summary>
+        public void Rect(float x, float y, float width, float height, Color? fill = null, Color? stroke = null, float strokeWidth = 1f, float? rx = null, float? ry = null)
         {
-            Tag("rect",
+            var attributes = new List<(string, string)>
+            {
                 ("x", x.ToString("F3")),
                 ("y", y.ToString("F3")),
                 ("width", width.ToString("F3")),
                 ("height", height.ToString("F3")),
                 ("fill", fill?.ToString() ?? "none"),
                 ("stroke", stroke?.ToString() ?? "black"),
-                ("stroke-width", strokeWidth.ToString("F3")));
+                ("stroke-width", strokeWidth.ToString("F3"))
+            };
+
+            if (rx.HasValue)
+            {
+                attributes.Add(("rx", rx.Value.ToString("F3")));
+                attributes.Add(("ry", (ry ?? rx.Value).ToString("F3")));
+            }
+
+            Tag("rect", attributes.ToArray());
         }
 
         /// <summary> Draws a circle. </summary>

@@ -4,17 +4,9 @@
 
 ---
 
-## Visual Concept
+## Visual Preview
 
-```
-  Y ▲
-    │         *  *
-    │       *      *
-    │     *          *
-    │   *              *
-    │  *                 *
-    └──────────────────────► X
-```
+![LinePlot Harmonic Signal Analysis](./line_plot.svg)
 
 ---
 

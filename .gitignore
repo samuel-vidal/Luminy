@@ -104,6 +104,7 @@ Reports/
 TestResults/
 [Rr]eports/
 *.svg
+!docs/**/*.svg
 build_output.txt
 tests/**/Reports/
 .vs
