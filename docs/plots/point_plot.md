@@ -4,17 +4,9 @@
 
 ---
 
-## Visual Concept
+## Visual Preview
 
-```
-  Y ▲
-    │             ●  ●
-    │           ●   ●  ●   (Cluster B)
-    │
-    │    ●  ●
-    │   ● ●  ●             (Cluster A)
-    └──────────────────────► X
-```
+![PointPlot Bivariate Clustering](./point_plot.svg)
 
 ---
 
