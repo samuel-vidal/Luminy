@@ -4,23 +4,9 @@
 
 ---
 
-## Visual Concept & Anatomy
+## Visual Preview
 
-```
-         Outlier ●
-                 │
-              ┌──┴──┐  Upper Whisker Cap
-                 │     Upper Whisker (<= Q3 + 1.5*IQR)
-              ┌──┴──┐
-              │ Q3  │  75th Percentile
-              ├───┬─┤  Median (50th Percentile)
-              │ Q1  │  25th Percentile
-              └──┬──┘
-                 │     Lower Whisker (>= Q1 - 1.5*IQR)
-              └──┬──┘  Lower Whisker Cap
-                 │
-         Outlier ●
-```
+![BoxPlot Clinical Biomarker Response](./box_plot.svg)
 
 ---
 
