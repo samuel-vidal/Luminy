@@ -4,20 +4,9 @@
 
 ---
 
-## Visual Concept
+## Visual Preview
 
-```
-          . - ~ - .
-      . '   ┌───┐   ' .
-    /       │Desktop│   \
-   :    (45%)───┘        :
-  :   (     ┌───┐     )   :
-  :   (     │Hole     )   :
-   :    (   └───┘   )    :
-    \       (30%)       /
-      . '   Mobile  ' .
-          . - ~ - .
-```
+![DonutPlot Platform Market Share](./donut_plot.svg)
 
 ---
 
