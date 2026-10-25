@@ -33,7 +33,12 @@ namespace Luminy.Model
                 var (left, bottom) = map(X[i] - BarWidth / 2, 0);
                 var (right, top) = map(X[i] + BarWidth / 2, Heights[i]);
 
-                svg.Rect(left, top, right - left, bottom - top, Color);
+                var rectX = Math.Min(left, right);
+                var rectY = Math.Min(top, bottom);
+                var rectW = Math.Abs(right - left);
+                var rectH = Math.Abs(bottom - top);
+
+                svg.Rect(rectX, rectY, rectW, rectH, Color);
             }
         }
 

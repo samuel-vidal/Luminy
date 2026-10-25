@@ -19,22 +19,31 @@ import React from 'react';
 import { Display, MatrixPlot } from 'luminy-react';
 
 export const HeatmapDemo: React.FC = () => {
-  // 3x3 2D numerical array
-  const matrix = [
-    [1.0, 2.5, 3.8],
-    [4.2, 5.0, 2.1],
-    [0.5, 1.8, 4.9]
-  ];
+  const size = 12;
+  const center = (size - 1) / 2.0;
+  const matrix: number[][] = [];
+
+  for (let i = 0; i < size; i++) {
+    const row: number[] = [];
+    for (let j = 0; j < size; j++) {
+      const di = (i - center) / center;
+      const dj = (j - center) / center;
+      const dist = Math.sqrt(di * di + dj * dj);
+      row.push(Math.cos(dist * 2.5 * Math.PI) * Math.exp(-dist * 0.7));
+    }
+    matrix.push(row);
+  }
 
   return (
     <Display
       width={700}
       height={460}
-      title="Thermal Intensity Field"
-      xLabel="Spatial Column Index"
-      yLabel="Spatial Row Index"
+      title="2D Intensity Ripple Field"
+      xLabel="Matrix Column (j)"
+      yLabel="Matrix Row (i)"
       showGrid={false}
       showLegend={false}
+      axesStyle="Frame"
     >
       <MatrixPlot
         data={matrix}
@@ -42,7 +51,7 @@ export const HeatmapDemo: React.FC = () => {
         colorMax="#0284c7"
         cellStroke="rgba(255, 255, 255, 0.4)"
         cellStrokeWidth={0.5}
-        label="Intensity"
+        label="Thermal Intensity"
       />
     </Display>
   );
@@ -52,25 +61,41 @@ export const HeatmapDemo: React.FC = () => {
 ### 🔷 C# (.NET Core)
 
 ```csharp
+using System;
 using Luminy.Builders;
 using Luminy.Model;
 
-float[,] matrix = {
-    { 1.0f, 2.5f, 3.8f },
-    { 4.2f, 5.0f, 2.1f },
-    { 0.5f, 1.8f, 4.9f }
-};
+var luminy = new LuminyBuilder { Width = 700, Height = 460, ShowGrid = false, ShowLegend = false };
 
-var display = LuminyBuilder.Chart()
-    .WithDimensions(700, 460)
-    .WithTitle("Thermal Intensity Field")
-    .Add(new MatrixPlot(
-        matrix,
-        ColorMin: Color.FromHex("#f0f9ff"),
-        ColorMax: Color.FromHex("#0284c7"),
-        Label: "Intensity"
-    ))
-    .Build();
+const int size = 12;
+var matrix = new float[size, size];
+const float center = (size - 1) / 2.0f;
+
+for (var i = 0; i < size; i++)
+{
+    for (var j = 0; j < size; j++)
+    {
+        var di = (i - center) / center;
+        var dj = (j - center) / center;
+        var dist = MathF.Sqrt(di * di + dj * dj);
+        matrix[i, j] = MathF.Cos(dist * 2.5f * MathF.PI) * MathF.Exp(-dist * 0.7f);
+    }
+}
+
+var heatmap = luminy.Matrix(
+    matrix,
+    label: "Thermal Intensity",
+    colorMin: new Color(0.94f, 0.98f, 1.0f),
+    colorMax: new Color(0.01f, 0.52f, 0.78f)
+);
+
+var display = luminy.Display(heatmap) with
+{
+    Title = "2D Intensity Ripple Field",
+    XLabel = "Matrix Column (j)",
+    YLabel = "Matrix Row (i)",
+    AxesStyle = AxesStyle.Frame
+};
 
 string svg = display.ToSvg();
 ```
@@ -79,17 +104,18 @@ string svg = display.ToSvg();
 
 ```xaml
 <luminy:Display
-    PlotTitle="Thermal Intensity Field"
-    XAxisLabel="Column"
-    YAxisLabel="Row"
+    PlotTitle="2D Intensity Ripple Field"
+    XAxisLabel="Matrix Column (j)"
+    YAxisLabel="Matrix Row (i)"
     Width="700"
     Height="460">
     <luminy:MatrixPlot
-        Data2D="{Binding HeatmapMatrix}"
+        Data2D="{Binding RippleMatrix}"
         ColorMin="#f0f9ff"
         ColorMax="#0284c7"
         CellStroke="White"
-        CellStrokeThickness="0.5" />
+        CellStrokeThickness="0.5"
+        Label="Thermal Intensity" />
 </luminy:Display>
 ```
 
