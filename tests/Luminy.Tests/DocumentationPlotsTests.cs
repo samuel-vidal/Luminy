@@ -163,6 +163,7 @@ namespace Luminy.Tests
                 YLabel = "Net Earnings (k€)",
                 ShowGrid = true,
                 ShowLegend = true,
+                LegendPosition = LegendPosition.BottomRight,
                 AxesStyle = AxesStyle.Frame
             };
 
@@ -217,20 +218,25 @@ namespace Luminy.Tests
             var luminy = new LuminyBuilder { Width = 700, Height = 420, ShowGrid = true, ShowLegend = true };
 
             float[] control = [10.2f, 10.8f, 11.1f, 9.7f, 10.5f, 11.4f, 10.3f, 9.9f, 10.6f, 14.5f];
-            float[] drugA = [11.8f, 12.5f, 12.1f, 13.0f, 12.4f, 12.8f, 11.9f, 12.6f, 12.2f, 8.5f];
-            float[] drugB = [13.5f, 14.2f, 13.9f, 14.8f, 14.1f, 14.5f, 13.7f, 14.4f, 14.0f, 15.2f];
+            float[] dose10 = [11.5f, 11.9f, 12.2f, 11.0f, 12.4f, 11.8f, 12.1f, 11.6f, 12.3f, 8.8f];
+            float[] dose25 = [12.8f, 13.4f, 13.1f, 12.6f, 13.7f, 13.2f, 13.5f, 12.9f, 13.3f, 13.0f];
+            float[] dose50 = [14.2f, 14.9f, 14.5f, 14.0f, 15.1f, 14.6f, 14.8f, 14.3f, 15.3f, 14.7f];
+            float[] dose100 = [16.0f, 16.8f, 16.5f, 15.9f, 17.2f, 16.6f, 17.0f, 16.3f, 17.4f, 19.2f];
 
-            var box1 = luminy.Box(control, x: 1f, label: "Placebo Control", color: new Color(0.01f, 0.52f, 0.78f), width: 0.65f);
-            var box2 = luminy.Box(drugA, x: 2f, label: "Treatment Alpha", color: new Color(0.06f, 0.73f, 0.51f), width: 0.65f);
-            var box3 = luminy.Box(drugB, x: 3f, label: "Treatment Beta", color: new Color(0.96f, 0.62f, 0.04f), width: 0.65f);
+            var box1 = luminy.Box(control, x: 1f, label: "Placebo Control", color: new Color(0.01f, 0.52f, 0.78f), width: 0.5f);
+            var box2 = luminy.Box(dose10, x: 2f, label: "Low Dose 10mg", color: new Color(0.05f, 0.65f, 0.91f), width: 0.5f);
+            var box3 = luminy.Box(dose25, x: 3f, label: "Medium Dose 25mg", color: new Color(0.06f, 0.73f, 0.51f), width: 0.5f);
+            var box4 = luminy.Box(dose50, x: 4f, label: "High Dose 50mg", color: new Color(0.96f, 0.62f, 0.04f), width: 0.5f);
+            var box5 = luminy.Box(dose100, x: 5f, label: "Max Dose 100mg", color: new Color(0.94f, 0.27f, 0.27f), width: 0.5f);
 
-            var display = luminy.Display(box1, box2, box3) with
+            var display = luminy.Display(box1, box2, box3, box4, box5) with
             {
                 Title = "Clinical Biomarker Response (Tukey Boxplot)",
-                XLabel = "Cohort (1: Control, 2: Dose A, 3: Dose B)",
+                XLabel = "Study Cohort (1: Placebo, 2: 10mg, 3: 25mg, 4: 50mg, 5: 100mg)",
                 YLabel = "Biomarker Level (mg/dL)",
                 ShowGrid = true,
                 ShowLegend = true,
+                LegendPosition = LegendPosition.BottomRight,
                 AxesStyle = AxesStyle.Frame
             };
 

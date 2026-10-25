@@ -1,6 +1,6 @@
 # BarChart (Column & Bar Charts)
 
-`BarChart` renders categorical and discrete numeric distributions as vertical columns. Bars project outward from the zero baseline ($Y = 0$), supporting both **positive earnings** and **negative deficits**.
+`BarChart` renders categorical and discrete numeric distributions as vertical columns. Bars project outward from the zero baseline ($Y = 0$), natively supporting both **positive earnings** and **negative deficits** (e.g. the Q3 operating loss projecting downward below the axis).
 
 ---
 
@@ -19,25 +19,27 @@ import React from 'react';
 import { Display, BarChart } from 'luminy-react';
 
 export const FinancialBarChart: React.FC = () => {
-  const quarters = [1, 2, 3, 4];
-  const netEarnings = [45, 62, -18, 74];
+  // 6 fiscal quarters; Q3 reflects an operating deficit (-18k€) projecting below zero
+  const quarters = [1, 2, 3, 4, 5, 6];
+  const netEarnings = [45, 62, -18, 74, 85, 55];
 
   return (
     <Display
       width={700}
       height={420}
       title="Quarterly Fiscal Results"
-      xLabel="Quarter (Q1 - Q4)"
+      xLabel="Fiscal Period (Q1 - Q6)"
       yLabel="Net Earnings (k€)"
       showGrid={true}
       showLegend={true}
+      legendPosition="BottomRight"
     >
       <BarChart
         x={quarters}
         heights={netEarnings}
         barWidth={0.65}
         color="#0d9488"
-        label="Net Results (k€)"
+        label="Net Earnings (k€)"
       />
     </Display>
   );
@@ -50,15 +52,24 @@ export const FinancialBarChart: React.FC = () => {
 using Luminy.Builders;
 using Luminy.Model;
 
-float[] quarters = [1f, 2f, 3f, 4f];
-float[] earnings = [45f, 62f, -18f, 74f];
+var luminy = new LuminyBuilder { Width = 700, Height = 420 };
 
-var display = LuminyBuilder.Chart()
-    .WithDimensions(700, 420)
-    .WithTitle("Quarterly Fiscal Results")
-    .WithGrid()
-    .Add(new BarChart(earnings, quarters, BarWidth: 0.65f, Label: "Net Results (k€)", Color: Color.FromHex("#0d9488")))
-    .Build();
+// 6 fiscal quarters; Q3 accounts for an operating loss (-18k€)
+float[] quarters = [1f, 2f, 3f, 4f, 5f, 6f];
+float[] earnings = [45f, 62f, -18f, 74f, 85f, 55f];
+
+var bars = luminy.Bars(quarters, earnings, label: "Net Earnings (k€)", color: new Color(0.05f, 0.58f, 0.53f), barWidth: 0.65f);
+
+var display = luminy.Display(bars) with
+{
+    Title = "Quarterly Fiscal Results",
+    XLabel = "Fiscal Period (Q1 - Q6)",
+    YLabel = "Net Earnings (k€)",
+    ShowGrid = true,
+    ShowLegend = true,
+    LegendPosition = LegendPosition.BottomRight,
+    AxesStyle = AxesStyle.Frame
+};
 
 string svg = display.ToSvg();
 ```
@@ -68,9 +79,11 @@ string svg = display.ToSvg();
 ```xaml
 <luminy:Display
     PlotTitle="Quarterly Fiscal Results"
-    XAxisLabel="Quarter"
+    XAxisLabel="Fiscal Period (Q1 - Q6)"
     YAxisLabel="Net Earnings (k€)"
     ShowGrid="True"
+    ShowLegend="True"
+    LegendPosition="BottomRight"
     Width="700"
     Height="420">
     <luminy:BarChart
@@ -78,7 +91,7 @@ string svg = display.ToSvg();
         Heights="{Binding NetEarnings}"
         BarWidth="0.65"
         Fill="#0d9488"
-        Label="Net Results" />
+        Label="Net Earnings (k€)" />
 </luminy:Display>
 ```
 

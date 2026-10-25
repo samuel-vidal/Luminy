@@ -25,7 +25,7 @@ namespace Luminy.Builders
         public int Inset { get; set; } = 20;
 
         /// <summary> Default grid color. </summary>
-        public Color GridColor { get; set; } = new(0.82f, 0.85f, 0.88f);
+        public Color GridColor { get; set; } = new(0.72f, 0.77f, 0.82f);
 
         /// <summary> Default background card color. </summary>
         public Color? BackgroundColor { get; set; } = new Color(0.973f, 0.980f, 0.988f);

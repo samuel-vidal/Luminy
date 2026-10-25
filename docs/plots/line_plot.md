@@ -18,26 +18,37 @@
 import React from 'react';
 import { Display, LinePlot } from 'luminy-react';
 
-export const SignalChart: React.FC = () => {
-  const x = [0, 1, 2, 3, 4, 5, 6];
-  const y = [0, 0.84, 0.91, 0.14, -0.76, -0.96, -0.28];
+export const HarmonicSignalChart: React.FC = () => {
+  const samples = 120;
+  const step = (4.0 * Math.PI) / samples;
+  const x = Array.from({ length: samples }, (_, i) => i * step);
+  const pureSin = x.map(t => Math.sin(2.0 * t));
+  const dampedCos = x.map(t => Math.cos(2.0 * t) * Math.exp(-0.15 * t));
 
   return (
-    <Display width={700} height={420} title="Harmonic Wave" showGrid={true} showLegend={true}>
+    <Display
+      width={700}
+      height={420}
+      title="Harmonic Signal Analysis"
+      xLabel="Time t (s)"
+      yLabel="Signal Amplitude"
+      showGrid={true}
+      showLegend={true}
+      axesStyle="Frame"
+    >
       <LinePlot
         x={x}
-        y={y}
-        label="Sine Output"
+        y={pureSin}
+        label="Harmonic Sine"
         color="#0284c7"
-        strokeWidth={2.5}
+        strokeWidth={2}
       />
       <LinePlot
         x={x}
-        y={y.map(v => v * 0.5)}
-        label="Damped Phase"
+        y={dampedCos}
+        label="Damped Cosine"
         color="#f97316"
-        strokeWidth={1.5}
-        strokeDasharray="4 4"
+        strokeWidth={2}
       />
     </Display>
   );
@@ -47,18 +58,38 @@ export const SignalChart: React.FC = () => {
 ### 🔷 C# (.NET Core)
 
 ```csharp
+using System;
 using Luminy.Builders;
 using Luminy.Model;
 
-float[] x = [0, 1, 2, 3, 4, 5, 6];
-float[] y = [0, 0.84f, 0.91f, 0.14f, -0.76f, -0.96f, -0.28f];
+var luminy = new LuminyBuilder { Width = 700, Height = 420 };
 
-var display = LuminyBuilder.Chart()
-    .WithDimensions(700, 420)
-    .WithTitle("Harmonic Wave")
-    .WithGrid()
-    .Add(new LinePlot(x, y, "Sine Output", Color.FromHex("#0284c7"), StrokeWidth: 2.5f))
-    .Build();
+const int samples = 120;
+var x = new float[samples];
+var pureSin = new float[samples];
+var dampedCos = new float[samples];
+
+const float step = (float)(4.0 * Math.PI / samples);
+for (var i = 0; i < samples; i++)
+{
+    var t = i * step;
+    x[i] = t;
+    pureSin[i] = MathF.Sin(2.0f * t);
+    dampedCos[i] = MathF.Cos(2.0f * t) * MathF.Exp(-0.15f * t);
+}
+
+var line1 = luminy.Line(x, pureSin, label: "Harmonic Sine", color: new Color(0.01f, 0.52f, 0.78f), strokeWidth: 2);
+var line2 = luminy.Line(x, dampedCos, label: "Damped Cosine", color: new Color(0.98f, 0.45f, 0.09f), strokeWidth: 2);
+
+var display = luminy.Display(line1, line2) with
+{
+    Title = "Harmonic Signal Analysis",
+    XLabel = "Time t (s)",
+    YLabel = "Signal Amplitude",
+    ShowGrid = true,
+    ShowLegend = true,
+    AxesStyle = AxesStyle.Frame
+};
 
 string svg = display.ToSvg();
 ```
@@ -67,7 +98,9 @@ string svg = display.ToSvg();
 
 ```xaml
 <luminy:Display
-    PlotTitle="Harmonic Wave"
+    PlotTitle="Harmonic Signal Analysis"
+    XAxisLabel="Time t (s)"
+    YAxisLabel="Signal Amplitude"
     ShowGrid="True"
     ShowLegend="True"
     Width="700"
@@ -76,7 +109,14 @@ string svg = display.ToSvg();
         XValues="{Binding TimeData}"
         YValues="{Binding SineData}"
         Stroke="#0284c7"
-        StrokeThickness="2.5" />
+        StrokeThickness="2"
+        Label="Harmonic Sine" />
+    <luminy:LinePlot
+        XValues="{Binding TimeData}"
+        YValues="{Binding DampedCosineData}"
+        Stroke="#f97316"
+        StrokeThickness="2"
+        Label="Damped Cosine" />
 </luminy:Display>
 ```
 

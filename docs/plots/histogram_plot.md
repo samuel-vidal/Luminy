@@ -19,25 +19,36 @@ import React from 'react';
 import { Display, HistogramPlot } from 'luminy-react';
 
 export const SampleHistogram: React.FC = () => {
-  // Continuous measurement data
-  const sensorReadings = [10.2, 11.5, 9.8, 10.4, 12.1, 10.8, 11.0, 9.5, 10.7, 11.2, 10.5];
+  const samples = 500;
+  const data: number[] = [];
+
+  for (let i = 0; i < samples; i++) {
+    const u1 = Math.max(1e-6, Math.abs((Math.sin(i * 12.9898 + 5) * 43758.5453) % 1));
+    const u2 = ((Math.sin(i * 78.233 + 11) * 43758.5453) % 1 + 1) % 1;
+    const r = Math.sqrt(-2.0 * Math.log(u1));
+    const theta = 2.0 * Math.PI * u2;
+    const z0 = r * Math.cos(theta);
+    const center = (i % 2 === 0) ? 6.0 : 14.0;
+    data.push(center + z0 * 1.8);
+  }
 
   return (
     <Display
       width={700}
       height={420}
-      title="Sensor Noise Distribution"
-      xLabel="Voltage (V)"
+      title="Bimodal Frequency Distribution"
+      xLabel="Measurement Variable (x)"
       yLabel="Frequency Count"
       showGrid={true}
       showLegend={true}
+      axesStyle="Frame"
     >
       <HistogramPlot
-        data={sensorReadings}
-        binCount={15}
+        data={data}
+        binCount={18}
         color="#8b5cf6"
         stroke="rgba(255, 255, 255, 0.3)"
-        label="Sensor Readings"
+        label="Sample Density"
       />
     </Display>
   );
@@ -47,17 +58,37 @@ export const SampleHistogram: React.FC = () => {
 ### 🔷 C# (.NET Core)
 
 ```csharp
+using System;
 using Luminy.Builders;
 using Luminy.Model;
 
-float[] sensorReadings = [10.2f, 11.5f, 9.8f, 10.4f, 12.1f, 10.8f, 11.0f, 9.5f, 10.7f];
+var luminy = new LuminyBuilder { Width = 700, Height = 420 };
 
-var display = LuminyBuilder.Chart()
-    .WithDimensions(700, 420)
-    .WithTitle("Sensor Noise Distribution")
-    .WithGrid()
-    .Add(new HistogramPlot(sensorReadings, BinCount: 15, Label: "Sensor Readings", Color: Color.FromHex("#8b5cf6")))
-    .Build();
+const int samples = 500;
+var data = new float[samples];
+for (var i = 0; i < samples; i++)
+{
+    var u1 = Math.Max(1e-6f, Math.Abs((MathF.Sin(i * 12.9898f + 5f) * 43758.5453f) % 1f));
+    var u2 = (MathF.Sin(i * 78.233f + 11f) * 43758.5453f) % 1f;
+    var r = MathF.Sqrt(-2.0f * MathF.Log(u1));
+    var theta = 2.0f * MathF.PI * u2;
+    var z0 = r * MathF.Cos(theta);
+
+    var center = (i % 2 == 0) ? 6.0f : 14.0f;
+    data[i] = center + z0 * 1.8f;
+}
+
+var hist = luminy.Histogram(data, binCount: 18, label: "Sample Density", color: new Color(0.55f, 0.36f, 0.96f));
+
+var display = luminy.Display(hist) with
+{
+    Title = "Bimodal Frequency Distribution",
+    XLabel = "Measurement Variable (x)",
+    YLabel = "Frequency Count",
+    ShowGrid = true,
+    ShowLegend = true,
+    AxesStyle = AxesStyle.Frame
+};
 
 string svg = display.ToSvg();
 ```
@@ -66,17 +97,18 @@ string svg = display.ToSvg();
 
 ```xaml
 <luminy:Display
-    PlotTitle="Sensor Noise Distribution"
-    XAxisLabel="Voltage (V)"
+    PlotTitle="Bimodal Frequency Distribution"
+    XAxisLabel="Measurement Variable (x)"
     YAxisLabel="Frequency Count"
     ShowGrid="True"
+    ShowLegend="True"
     Width="700"
     Height="420">
     <luminy:HistogramPlot
-        Data="{Binding SensorReadings}"
-        BinCount="15"
+        Data="{Binding SampleData}"
+        BinCount="18"
         Fill="#8b5cf6"
-        Label="Sensor Readings" />
+        Label="Sample Density" />
 </luminy:Display>
 ```
 

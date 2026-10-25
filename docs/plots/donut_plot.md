@@ -26,7 +26,7 @@ export const MarketShareChart: React.FC = () => {
     <Display
       width={700}
       height={460}
-      title="Platform Distribution"
+      title="Platform Market Share"
       axesStyle="none"
       showGrid={false}
       showLegend={true}
@@ -51,18 +51,23 @@ export const MarketShareChart: React.FC = () => {
 using Luminy.Builders;
 using Luminy.Model;
 
-float[] values = [45f, 30f, 18f, 7f];
-string[] labels = ["Desktop", "Mobile", "Tablet", "Console"];
+var luminy = new LuminyBuilder();
+var values = new[] { 45f, 30f, 18f, 7f };
+var labels = new[] { "Desktop", "Mobile", "Tablet", "Console" };
 
-var display = LuminyBuilder.DonutDisplay(
+var display = luminy.DonutDisplay(
     values,
     labels,
-    title: "Platform Distribution",
+    title: "Platform Market Share",
     internalRadius: 0.6f,
     externalRadius: 1.0f,
-    insideValueDisplay: InsideValueDisplay.Percent,
+    insideValueDisplay: DonutValueDisplay.Percent,
     showSliceLabels: true
-);
+) with
+{
+    Width = 700,
+    Height = 460
+};
 
 string svg = display.ToSvg();
 ```
@@ -71,7 +76,7 @@ string svg = display.ToSvg();
 
 ```xaml
 <luminy:Display
-    PlotTitle="Platform Distribution"
+    PlotTitle="Platform Market Share"
     AxesStyle="None"
     ShowGrid="False"
     ShowLegend="True"

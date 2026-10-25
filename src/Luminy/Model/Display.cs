@@ -359,7 +359,7 @@ namespace Luminy.Model
 
         private void DrawGrid(SvgBuilder svg, Range xRange, Range yRange, CoordinateMap coordinate)
         {
-            var gridColor = GridColor ?? new Color(0.82f, 0.85f, 0.88f);
+            var gridColor = GridColor ?? new Color(0.72f, 0.77f, 0.82f);
 
             // Draw grid lines at tick positions
             var xTicks = CalculateTicks(xRange);
@@ -369,14 +369,14 @@ namespace Luminy.Model
             {
                 var (pxStart, pyStart) = coordinate(x, yRange.Min);
                 var (pxEnd, pyEnd) = coordinate(x, yRange.Max);
-                svg.Line(pxStart, pyStart, pxEnd, pyEnd, gridColor, 0.5f);
+                svg.Line(pxStart, pyStart, pxEnd, pyEnd, gridColor, 1.0f);
             }
 
             foreach (var y in yTicks)
             {
                 var (pxStart, pyStart) = coordinate(xRange.Min, y);
                 var (pxEnd, pyEnd) = coordinate(xRange.Max, y);
-                svg.Line(pxStart, pyStart, pxEnd, pyEnd, gridColor, 0.5f);
+                svg.Line(pxStart, pyStart, pxEnd, pyEnd, gridColor, 1.0f);
             }
         }
 
