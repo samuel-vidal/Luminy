@@ -14,6 +14,15 @@ export type { PointPlotProps } from './components/PointPlot';
 export { BarChart, calculateDefaultBarWidth } from './components/BarChart';
 export type { BarChartProps } from './components/BarChart';
 
+export { HistogramPlot, computeHistogramBins } from './components/HistogramPlot';
+export type { HistogramPlotProps, HistogramBinsResult } from './components/HistogramPlot';
+
+export { BoxPlot, computeBoxPlotStats } from './components/BoxPlot';
+export type { BoxPlotProps, BoxPlotStats } from './components/BoxPlot';
+
+export { MatrixPlot, getMatrixDimensions, getMatrixValueExtremes } from './components/MatrixPlot';
+export type { MatrixPlotProps } from './components/MatrixPlot';
+
 // Context & Hooks
 export { useDisplayContext } from './context/DisplayContext';
 export type { DisplayContextValue } from './context/DisplayContext';
@@ -35,4 +44,4 @@ export type {
 // Utilities
 export { calculateNiceTicks, formatTickLabel } from './utils/ticks';
 export { getArrayRange, combineRanges } from './utils/range';
-export { DEFAULT_PALETTE } from './utils/palette';
+export { DEFAULT_PALETTE, parseColor, interpolateColor } from './utils/palette';
