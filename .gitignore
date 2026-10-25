@@ -110,3 +110,4 @@ tests/**/Reports/
 /*.user
 !LICENSE.txt
 
+/Design
