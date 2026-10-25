@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Luminy.Builders;
 
 namespace Luminy.Model
@@ -21,6 +22,17 @@ namespace Luminy.Model
         /// <param name="svg">The SVG builder to write to.</param>
         /// <param name="map">The coordinate mapping function to transform data units to pixels.</param>
         public abstract void Render(SvgBuilder svg, CoordinateMap map);
+
+        /// <summary>
+        /// Gets the items to display in the legend for this plot.
+        /// </summary>
+        public virtual IEnumerable<(string Label, Color Color)> GetLegendItems()
+        {
+            if (!string.IsNullOrEmpty(Label))
+            {
+                yield return (Label, Color);
+            }
+        }
 
         /// <summary>
         /// Helper to check if a point is valid (finite) before rendering.

@@ -42,7 +42,8 @@ namespace Luminy.Builders
         // --- Color Management ---
 
         private int colorIndex = 0;
-        private static readonly Color[] Palette = 
+        /// <summary> Default color palette for plots. </summary>
+        public static readonly Color[] DefaultPalette = 
         {
             new (0.12f, 0.47f, 0.71f), // Blue
             new (1.00f, 0.50f, 0.05f), // Orange
@@ -55,6 +56,8 @@ namespace Luminy.Builders
             new (0.74f, 0.74f, 0.13f), // Yellow-Green
             new (0.09f, 0.75f, 0.81f)  // Cyan
         };
+
+        private static Color[] Palette => DefaultPalette;
 
         /// <summary>
         /// Resets the color palette index to zero.
@@ -118,6 +121,21 @@ namespace Luminy.Builders
                 label);
         }
 
+        /// <summary> Creates a donut or pie chart plot. </summary>
+        public DonutPlot Donut(
+            float[] values,
+            string[] labels,
+            float externalRadius = 1.0f,
+            float internalRadius = 0.6f,
+            Color[]? colors = null,
+            bool showSliceLabels = true,
+            DonutValueDisplay insideValueDisplay = DonutValueDisplay.None,
+            float minInsideValueThreshold = 0.05f,
+            string label = "")
+        {
+            return new DonutPlot(values, labels, externalRadius, internalRadius, colors, showSliceLabels, insideValueDisplay, minInsideValueThreshold, label);
+        }
+
         // --- Display Construction ---
 
         /// <summary>
@@ -137,6 +155,43 @@ namespace Luminy.Builders
                 ShowLegend: ShowLegend,
                 LegendPosition: LegendPosition
             );
+        }
+
+        /// <summary>
+        /// Creates a ready-to-render display containing the donut plot with clean axes-free settings.
+        /// </summary>
+        public Display DonutDisplay(DonutPlot donut, string title = "")
+        {
+            return new Display(
+                Plots: ImmutableArray.Create<Plot>(donut),
+                Width: Width,
+                Height: Height,
+                Padding: Padding,
+                Inset: Inset,
+                Title: title,
+                AxesStyle: AxesStyle.None,
+                ShowGrid: false,
+                ShowLegend: ShowLegend,
+                LegendPosition: LegendPosition
+            );
+        }
+
+        /// <summary>
+        /// Creates a ready-to-render display containing a donut plot with clean axes-free settings.
+        /// </summary>
+        public Display DonutDisplay(
+            float[] values,
+            string[] labels,
+            string title = "",
+            float externalRadius = 1.0f,
+            float internalRadius = 0.6f,
+            Color[]? colors = null,
+            bool showSliceLabels = true,
+            DonutValueDisplay insideValueDisplay = DonutValueDisplay.None,
+            float minInsideValueThreshold = 0.05f)
+        {
+            var donut = Donut(values, labels, externalRadius, internalRadius, colors, showSliceLabels, insideValueDisplay, minInsideValueThreshold);
+            return DonutDisplay(donut, title);
         }
     }
 }

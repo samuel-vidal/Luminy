@@ -196,17 +196,17 @@ namespace Luminy.Model
 
         private void DrawLegend(SvgBuilder svg, Range xRange, Range yRange, CoordinateMap coordinate)
         {
-            var labeledPlots = Plots.Where(p => !string.IsNullOrEmpty(p.Label)).ToArray();
-            if (labeledPlots.Length == 0) return;
+            var legendItems = Plots.SelectMany(p => p.GetLegendItems()).ToArray();
+            if (legendItems.Length == 0) return;
 
             const float rowHeight = 20;
             const float boxWidth = 15;
             const float padding = 10;
             float legendWidth = 100; // Minimal width, will be updated by content
-            var legendHeight = labeledPlots.Length * rowHeight + padding * 2;
+            var legendHeight = legendItems.Length * rowHeight + padding * 2;
 
             // Estimate width (simplified, ideally we'd measure text)
-            float maxLabelLength = labeledPlots.Max(p => p.Label.Length);
+            float maxLabelLength = legendItems.Max(p => p.Label.Length);
             legendWidth = Math.Max(legendWidth, maxLabelLength * 7 + boxWidth + padding * 3);
 
             // Determine position
@@ -244,16 +244,16 @@ namespace Luminy.Model
             svg.Rect(lx, ly, legendWidth, legendHeight, Color.White, stroke: Color.Black, strokeWidth: 0.5f);
 
             // Draw series items
-            for (var i = 0; i < labeledPlots.Length; i++)
+            for (var i = 0; i < legendItems.Length; i++)
             {
-                var plot = labeledPlots[i];
+                var (itemLabel, itemColor) = legendItems[i];
                 var iy = ly + padding + i * rowHeight + rowHeight / 2;
 
                 // Color box/line
-                svg.Rect(lx + padding, iy - boxWidth / 4, boxWidth, boxWidth / 2, plot.Color);
+                svg.Rect(lx + padding, iy - boxWidth / 4, boxWidth, boxWidth / 2, itemColor);
 
                 // Label
-                svg.Text(plot.Label, lx + padding + boxWidth + 5, iy + 4, "Arial, sans-serif", 10, "start", Color.Black);
+                svg.Text(itemLabel, lx + padding + boxWidth + 5, iy + 4, "Arial, sans-serif", 10, "start", Color.Black);
             }
         }
 
