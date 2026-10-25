@@ -4,17 +4,9 @@
 
 ---
 
-## Visual Concept
+## Visual Preview
 
-```
-  Y ▲
-    │       ┌──┐
-    │       │  │
-    │  ┌──┐ │  │
-  0 ┼──┼──┼─┼──┼───┼──┼──► X
-    │  │  │        │  │
-    │              └──┘ (Negative)
-```
+![BarChart Quarterly Fiscal Results](./bar_chart.svg)
 
 ---
 
