@@ -9,7 +9,7 @@ Luminy's architecture follows a strict, composable hierarchy:
 - **Report**: The top-level HTML document. Contains titles, sections, paragraphs, tables, code blocks, and `Chart` objects.
 - **Chart (Figure)**: A layout container holding one or more `Display` objects. It is instantiated with an output directory where it saves its SVGs.
 - **Display**: A shared coordinate space (axes, grids, scales). It is constructed via `LuminyBuilder` and holds one or more `Plot` objects.
-- **Plot**: The actual data visualization (`LinePlot`, `PointPlot`, `BarChart`, `HistogramPlot`, `MatrixPlot`, `BoxPlot`). Multiple plots can coexist inside the same Display.
+- **Plot**: The actual data visualization (`LinePlot`, `PointPlot`, `BarChart`, `HistogramPlot`, `MatrixPlot`, `BoxPlot`, `DonutPlot`). Multiple plots can coexist inside the same Display.
 
 ## Core Data Types & Namespaces
 Always include these namespaces:
@@ -27,6 +27,8 @@ You use the `LuminyBuilder` to construct plots and displays:
 - `luminy.Histogram(float[] data, int binCount = 10, string label = "", Color? color = null)`: Generates a histogram distribution.
 - `luminy.Matrix(float[,] data, string label = "", Color? colorMin = null, Color? colorMax = null)`: Generates a 2D heatmap.
 - `luminy.Box(float[] data, float x = 0, string label = "", Color? color = null, float width = 0.8f)`: Generates a Tukey box plot.
+- `luminy.Donut(float[] values, string[] labels, float externalRadius = 1.0f, float internalRadius = 0.6f, ...)`: Generates a donut or pie chart (`internalRadius = 0` for pie).
+- `luminy.DonutDisplay(...)`: Generates an axes-free display ready for rendering a donut or pie chart.
 - `luminy.Display(params Plot[] plots)`: Constructs an immutable display. If you dynamically generate plots in a list, use `luminy.Display(plots.ToArray())`.
 - `new ReportBuilder(outputDir, fileName).Build()`: Generates the HTML report and writes it to disk.
 

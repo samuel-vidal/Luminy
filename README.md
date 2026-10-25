@@ -113,6 +113,7 @@ new ReportBuilder(outputDir, "experiment_report.html")
 | **HistogramPlot** | Frequency distribution analysis with custom binning | `luminy.Histogram(data, binCount, label)` |
 | **MatrixPlot** | 2D color heatmaps with smooth gradient interpolation | `luminy.Matrix(data2D, label)` |
 | **BoxPlot** | Tukey-style statistical box & whiskers with automatic outlier detection | `luminy.Box(data, x, label)` |
+| **DonutPlot** | Circular donut or pie charts with optional inside values and slice labels | `luminy.Donut(values, labels)` or `luminy.DonutDisplay(values, labels)` |
 
 ---
 
