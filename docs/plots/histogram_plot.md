@@ -4,17 +4,9 @@
 
 ---
 
-## Visual Concept
+## Visual Preview
 
-```
-  Count ▲
-        │         ┌──┐
-        │      ┌──┤  ├──┐
-        │   ┌──┤  │  │  ├──┐
-        │   │  │  │  │  │  │
-        └───┴──┴──┴──┴──┴──┴──► Value (x)
-             k = 5 Bins
-```
+![HistogramPlot Bimodal Frequency Distribution](./histogram_plot.svg)
 
 ---
 
