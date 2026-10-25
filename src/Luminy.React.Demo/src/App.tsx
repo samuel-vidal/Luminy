@@ -3,8 +3,11 @@ import { LinePlotDemo } from './demos/LinePlotDemo';
 import { DonutPlotDemo } from './demos/DonutPlotDemo';
 import { PointPlotDemo } from './demos/PointPlotDemo';
 import { BarChartDemo } from './demos/BarChartDemo';
+import { HistogramPlotDemo } from './demos/HistogramPlotDemo';
+import { BoxPlotDemo } from './demos/BoxPlotDemo';
+import { MatrixPlotDemo } from './demos/MatrixPlotDemo';
 
-export type DemoTab = 'line' | 'donut' | 'point' | 'bar';
+export type DemoTab = 'line' | 'donut' | 'point' | 'bar' | 'histogram' | 'box' | 'matrix';
 
 interface TabItem {
   id: DemoTab;
@@ -42,6 +45,27 @@ const TABS: TabItem[] = [
     icon: '📊',
     badge: 'Categorical',
     description: 'Discrete series, bars & financial histograms'
+  },
+  {
+    id: 'histogram',
+    name: 'HistogramPlot',
+    icon: '📶',
+    badge: 'Distribution',
+    description: 'Frequency bins & statistical densities'
+  },
+  {
+    id: 'box',
+    name: 'BoxPlot',
+    icon: '📦',
+    badge: 'Summary',
+    description: 'Tukey whiskers, quartiles & outlier detection'
+  },
+  {
+    id: 'matrix',
+    name: 'MatrixPlot',
+    icon: '🔲',
+    badge: 'Heatmap',
+    description: '2D matrix intensity & spatial fields'
   }
 ];
 
@@ -91,6 +115,9 @@ export const App: React.FC = () => {
         {activeTab === 'donut' && <DonutPlotDemo />}
         {activeTab === 'point' && <PointPlotDemo />}
         {activeTab === 'bar' && <BarChartDemo />}
+        {activeTab === 'histogram' && <HistogramPlotDemo />}
+        {activeTab === 'box' && <BoxPlotDemo />}
+        {activeTab === 'matrix' && <MatrixPlotDemo />}
       </main>
     </div>
   );
