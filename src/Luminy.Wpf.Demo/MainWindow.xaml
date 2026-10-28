@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Luminy.Wpf.Demo"
         xmlns:luminy="clr-namespace:Luminy.Wpf;assembly=Luminy.Wpf"
         mc:Ignorable="d"
-        Title="Luminy.Wpf — DirectX Retained-Mode Showcase" Height="750" Width="1100"
+        Title="Luminy.Wpf — DirectX Hardware-Accelerated Retained-Mode Showcase"
+        Height="840" Width="1280"
         Background="#F8FAFC">
     
     <Window.DataContext>
@@ -14,69 +15,363 @@
     </Window.DataContext>
 
     <Grid Margin="24">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="280" />
-            <ColumnDefinition Width="24" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="16" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <!-- Sidebar Controls -->
-        <Border Grid.Column="0" Background="White" CornerRadius="8" BorderBrush="#E2E8F0" BorderThickness="1" Padding="20">
-            <StackPanel>
-                <TextBlock Text="Luminy.Wpf Demo" FontSize="20" FontWeight="Bold" Foreground="#0F172A" />
-                <TextBlock Text="Hardware-accelerated DirectX plotting" FontSize="12" Foreground="#64748B" Margin="0,4,0,24" />
-
-                <TextBlock Text="Frequency (rad/s)" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
-                <Slider Minimum="0.5" Maximum="6.0" Value="{Binding Frequency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.1" LargeChange="0.5" />
-                <TextBlock Text="{Binding Frequency, StringFormat='{}{0:F1} rad/s'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,16" />
-
-                <TextBlock Text="Amplitude" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
-                <Slider Minimum="0.2" Maximum="3.0" Value="{Binding Amplitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.1" LargeChange="0.5" />
-                <TextBlock Text="{Binding Amplitude, StringFormat='{}{0:F2}'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,16" />
-
-                <TextBlock Text="Noise Level" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
-                <Slider Minimum="0.0" Maximum="1.0" Value="{Binding Noise, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.05" LargeChange="0.2" />
-                <TextBlock Text="{Binding Noise, StringFormat='{}{0:F2}'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,24" />
-
-                <CheckBox Content="Show Grid" IsChecked="{Binding ShowGrid}" Margin="0,0,0,12" />
-                <CheckBox Content="Show Legend" IsChecked="{Binding ShowLegend}" Margin="0,0,0,12" />
-            </StackPanel>
+        <!-- Top Header Banner -->
+        <Border Grid.Row="0" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="20,16">
+            <DockPanel LastChildFill="False">
+                <StackPanel DockPanel.Dock="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Luminy.Wpf" FontSize="22" FontWeight="Bold" Foreground="#0F172A" VerticalAlignment="Center" />
+                        <Border Background="#EEF2FF" CornerRadius="4" Padding="8,2" Margin="12,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="DirectX Hardware-Accelerated Vector Engine" FontSize="11" FontWeight="SemiBold" Foreground="#4F46E5" />
+                        </Border>
+                    </StackPanel>
+                    <TextBlock Text="Retained-mode scene graphs, sub-millisecond redraws &amp; 100% multi-platform parity" FontSize="12" Foreground="#64748B" Margin="0,4,0,0" />
+                </StackPanel>
+            </DockPanel>
         </Border>
 
-        <!-- Visual Displays Area -->
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="3*" />
-                <RowDefinition Height="16" />
-                <RowDefinition Height="2*" />
-            </Grid.RowDefinitions>
+        <!-- Main Outer Tab Navigation -->
+        <TabControl Grid.Row="2" BorderThickness="0" Background="Transparent">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="FontWeight" Value="SemiBold" />
+                    <Setter Property="Padding" Value="16,10" />
+                    <Setter Property="Margin" Value="0,0,6,12" />
+                </Style>
+            </TabControl.Resources>
 
-            <!-- LinePlot Display -->
-            <Border Grid.Row="0" Background="White" CornerRadius="8" BorderBrush="#E2E8F0" BorderThickness="1" Padding="12">
-                <luminy:Display Title="Dynamic Harmonic Spectrum"
-                                XLabel="Time (s)"
-                                YLabel="Signal Voltage (V)"
-                                ShowGrid="{Binding ShowGrid}"
-                                ShowLegend="{Binding ShowLegend}">
-                    <luminy:LinePlot X="{Binding TimePoints}" Y="{Binding NoisySignal}" Label="Sensor Raw (Noisy)" StrokeThickness="1.5" Color="#FF94A3B8" />
-                    <luminy:LinePlot X="{Binding TimePoints}" Y="{Binding SineSignal}" Label="Fundamental Sin(ωt)" StrokeThickness="2.5" Color="#FF0284C7" />
-                    <luminy:LinePlot X="{Binding TimePoints}" Y="{Binding CosineSignal}" Label="Phase Cos(ωt)" StrokeThickness="2.0" Color="#FFF97316" />
-                </luminy:Display>
-            </Border>
+            <!-- ========================================== -->
+            <!-- TAB 1: LINE PLOT                           -->
+            <!-- ========================================== -->
+            <TabItem Header="📈 LinePlot">
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <!-- DonutPlot Display -->
-            <Border Grid.Row="2" Background="White" CornerRadius="8" BorderBrush="#E2E8F0" BorderThickness="1" Padding="12">
-                <luminy:Display Title="Platform Resource Distribution"
-                                AxesStyle="None"
-                                ShowGrid="False"
-                                ShowLegend="{Binding ShowLegend}">
-                    <luminy:DonutPlot Values="{Binding DonutValues}"
-                                      Labels="{Binding DonutLabels}"
-                                      InsideValueDisplay="Percent"
-                                      ExternalRadius="1.0"
-                                      InternalRadius="0.6" />
-                </luminy:Display>
-            </Border>
-        </Grid>
+                    <!-- Left Control Panel -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="LinePlot Controls" FontSize="16" FontWeight="Bold" Foreground="#0F172A" />
+                            <TextBlock Text="Signals, waveforms &amp; continuous curves" FontSize="11" Foreground="#64748B" Margin="0,2,0,16" />
+
+                            <TextBlock Text="Frequency (rad/s)" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
+                            <Slider Minimum="0.5" Maximum="6.0" Value="{Binding Frequency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.1" LargeChange="0.5" />
+                            <TextBlock Text="{Binding Frequency, StringFormat='{}{0:F1} rad/s'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,14" />
+
+                            <TextBlock Text="Amplitude" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
+                            <Slider Minimum="0.2" Maximum="3.0" Value="{Binding Amplitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.1" LargeChange="0.5" />
+                            <TextBlock Text="{Binding Amplitude, StringFormat='{}{0:F2}'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,14" />
+
+                            <TextBlock Text="Noise Level" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
+                            <Slider Minimum="0.0" Maximum="1.0" Value="{Binding Noise, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.05" LargeChange="0.2" />
+                            <TextBlock Text="{Binding Noise, StringFormat='{}{0:F2}'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,20" />
+
+                            <Border Background="#F8FAFC" CornerRadius="6" Padding="12" Margin="0,0,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="DISPLAY OPTIONS" FontSize="10" FontWeight="Bold" Foreground="#64748B" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Grid Lines" IsChecked="{Binding ShowGrid}" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Series Legend" IsChecked="{Binding ShowLegend}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Right Display -->
+                    <Border Grid.Column="2" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="16">
+                        <luminy:Display Title="Dynamic Harmonic Spectrum"
+                                        XLabel="Time Span (seconds)"
+                                        YLabel="Signal Voltage (V)"
+                                        ShowGrid="{Binding ShowGrid}"
+                                        ShowLegend="{Binding ShowLegend}">
+                            <luminy:LinePlot X="{Binding TimePoints}" Y="{Binding NoisySignal}" Label="Sensor Raw (Noisy)" StrokeThickness="1.5" Color="#FF94A3B8" />
+                            <luminy:LinePlot X="{Binding TimePoints}" Y="{Binding SineSignal}" Label="Fundamental Sin(ωt)" StrokeThickness="2.5" Color="#FF0284C7" />
+                            <luminy:LinePlot X="{Binding TimePoints}" Y="{Binding CosineSignal}" Label="Phase Cos(ωt)" StrokeThickness="2.0" Color="#FFF97316" />
+                        </luminy:Display>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- ========================================== -->
+            <!-- TAB 2: DONUT PLOT                          -->
+            <!-- ========================================== -->
+            <TabItem Header="🍩 DonutPlot">
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left Control Panel -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="DonutPlot Controls" FontSize="16" FontWeight="Bold" Foreground="#0F172A" />
+                            <TextBlock Text="Radial distributions &amp; donut/pie morphology" FontSize="11" Foreground="#64748B" Margin="0,2,0,16" />
+
+                            <TextBlock Text="Inner Hole Radius (Pie ↔ Donut)" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
+                            <Slider Minimum="0.0" Maximum="0.85" Value="{Binding DonutInternalRadius, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.05" LargeChange="0.1" />
+                            <TextBlock Text="{Binding DonutInternalRadius, StringFormat='{}Hole Radius: {0:F2}'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,20" />
+
+                            <Border Background="#F8FAFC" CornerRadius="6" Padding="12">
+                                <StackPanel>
+                                    <TextBlock Text="DISPLAY OPTIONS" FontSize="10" FontWeight="Bold" Foreground="#64748B" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Series Legend" IsChecked="{Binding ShowLegend}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Right Display -->
+                    <Border Grid.Column="2" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="16">
+                        <luminy:Display Title="Platform Operating System Market Share"
+                                        AxesStyle="None"
+                                        ShowGrid="False"
+                                        ShowLegend="{Binding ShowLegend}">
+                            <luminy:DonutPlot Values="{Binding DonutValues}"
+                                              Labels="{Binding DonutLabels}"
+                                              InsideValueDisplay="Percent"
+                                              ExternalRadius="1.0"
+                                              InternalRadius="{Binding DonutInternalRadius}" />
+                        </luminy:Display>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- ========================================== -->
+            <!-- TAB 3: POINT PLOT (SCATTER)                -->
+            <!-- ========================================== -->
+            <TabItem Header="🔵 PointPlot">
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left Control Panel -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="PointPlot Controls" FontSize="16" FontWeight="Bold" Foreground="#0F172A" />
+                            <TextBlock Text="Bivariate coordinate scatter &amp; multi-cluster clouds" FontSize="11" Foreground="#64748B" Margin="0,2,0,16" />
+
+                            <TextBlock Text="Point Marker Radius (px)" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
+                            <Slider Minimum="1.5" Maximum="10.0" Value="{Binding PointSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.5" LargeChange="1.0" />
+                            <TextBlock Text="{Binding PointSize, StringFormat='{}{0:F1} pixels'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,14" />
+
+                            <TextBlock Text="Cluster Dispersion Spread" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
+                            <Slider Minimum="2" Maximum="30" Value="{Binding ScatterSpread, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="1" LargeChange="5" />
+                            <TextBlock Text="{Binding ScatterSpread, StringFormat='{}Factor: {0}'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,20" />
+
+                            <Border Background="#F8FAFC" CornerRadius="6" Padding="12">
+                                <StackPanel>
+                                    <TextBlock Text="DISPLAY OPTIONS" FontSize="10" FontWeight="Bold" Foreground="#64748B" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Grid Lines" IsChecked="{Binding ShowGrid}" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Series Legend" IsChecked="{Binding ShowLegend}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Right Display -->
+                    <Border Grid.Column="2" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="16">
+                        <luminy:Display Title="Bivariate Population Clustering"
+                                        XLabel="Feature Vector X₁"
+                                        YLabel="Feature Vector X₂"
+                                        ShowGrid="{Binding ShowGrid}"
+                                        ShowLegend="{Binding ShowLegend}">
+                            <luminy:PointPlot X="{Binding ClusterAX}" Y="{Binding ClusterAY}" Label="Cluster Alpha (Normal)" PointSize="{Binding PointSize}" Color="#FF0284C7" />
+                            <luminy:PointPlot X="{Binding ClusterBX}" Y="{Binding ClusterBY}" Label="Cluster Beta (Shifted)" PointSize="{Binding PointSize}" Color="#FFF97316" />
+                        </luminy:Display>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- ========================================== -->
+            <!-- TAB 4: BAR CHART                           -->
+            <!-- ========================================== -->
+            <TabItem Header="📊 BarChart">
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left Control Panel -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="BarChart Controls" FontSize="16" FontWeight="Bold" Foreground="#0F172A" />
+                            <TextBlock Text="Discrete series &amp; categorical comparisons" FontSize="11" Foreground="#64748B" Margin="0,2,0,16" />
+
+                            <TextBlock Text="Bar Column Width" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
+                            <Slider Minimum="0.2" Maximum="0.95" Value="{Binding BarWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.05" LargeChange="0.1" />
+                            <TextBlock Text="{Binding BarWidth, StringFormat='{}{0:F2} data units'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,20" />
+
+                            <Border Background="#F8FAFC" CornerRadius="6" Padding="12">
+                                <StackPanel>
+                                    <TextBlock Text="DISPLAY OPTIONS" FontSize="10" FontWeight="Bold" Foreground="#64748B" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Grid Lines" IsChecked="{Binding ShowGrid}" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Series Legend" IsChecked="{Binding ShowLegend}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Right Display -->
+                    <Border Grid.Column="2" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="16">
+                        <luminy:Display Title="Quarterly Revenue &amp; Shipment Units"
+                                        XLabel="Fiscal Quarter (Q1 to Q5)"
+                                        YLabel="Volume (Thousands)"
+                                        ShowGrid="{Binding ShowGrid}"
+                                        ShowLegend="{Binding ShowLegend}">
+                            <luminy:BarChart X="{Binding BarX}" Heights="{Binding BarHeights}" BarWidth="{Binding BarWidth}" Label="Gross Units" Color="#FF10B981" />
+                        </luminy:Display>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- ========================================== -->
+            <!-- TAB 5: HISTOGRAM PLOT                      -->
+            <!-- ========================================== -->
+            <TabItem Header="📶 HistogramPlot">
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left Control Panel -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="Histogram Controls" FontSize="16" FontWeight="Bold" Foreground="#0F172A" />
+                            <TextBlock Text="Frequency distribution &amp; sample densities" FontSize="11" Foreground="#64748B" Margin="0,2,0,16" />
+
+                            <TextBlock Text="Partition Bin Count" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
+                            <Slider Minimum="5" Maximum="60" Value="{Binding HistogramBins, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="1" LargeChange="5" />
+                            <TextBlock Text="{Binding HistogramBins, StringFormat='{}{0} bins'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,20" />
+
+                            <Border Background="#F8FAFC" CornerRadius="6" Padding="12">
+                                <StackPanel>
+                                    <TextBlock Text="DISPLAY OPTIONS" FontSize="10" FontWeight="Bold" Foreground="#64748B" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Grid Lines" IsChecked="{Binding ShowGrid}" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Series Legend" IsChecked="{Binding ShowLegend}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Right Display -->
+                    <Border Grid.Column="2" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="16">
+                        <luminy:Display Title="Bimodal Empirical Distribution Density"
+                                        XLabel="Observation Value (x)"
+                                        YLabel="Sample Frequency (count)"
+                                        ShowGrid="{Binding ShowGrid}"
+                                        ShowLegend="{Binding ShowLegend}">
+                            <luminy:HistogramPlot Data="{Binding HistogramData}" BinCount="{Binding HistogramBins}" Label="Sample Count" Color="#FF8B5CF6" />
+                        </luminy:Display>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- ========================================== -->
+            <!-- TAB 6: BOX PLOT                            -->
+            <!-- ========================================== -->
+            <TabItem Header="📦 BoxPlot">
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left Control Panel -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="BoxPlot Controls" FontSize="16" FontWeight="Bold" Foreground="#0F172A" />
+                            <TextBlock Text="Tukey 5-number summary, quartiles &amp; outliers" FontSize="11" Foreground="#64748B" Margin="0,2,0,16" />
+
+                            <TextBlock Text="Box Column Width" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
+                            <Slider Minimum="0.2" Maximum="0.9" Value="{Binding BoxWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.05" LargeChange="0.1" />
+                            <TextBlock Text="{Binding BoxWidth, StringFormat='{}{0:F2} data units'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,20" />
+
+                            <Border Background="#F8FAFC" CornerRadius="6" Padding="12">
+                                <StackPanel>
+                                    <TextBlock Text="DISPLAY OPTIONS" FontSize="10" FontWeight="Bold" Foreground="#64748B" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Grid Lines" IsChecked="{Binding ShowGrid}" Margin="0,0,0,8" />
+                                    <CheckBox Content="Show Series Legend" IsChecked="{Binding ShowLegend}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Right Display -->
+                    <Border Grid.Column="2" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="16">
+                        <luminy:Display Title="Clinical Biomarker Response by Cohort"
+                                        XLabel="Study Cohort (1: Control, 2: Placebo, 3: Active)"
+                                        YLabel="Biomarker Level (pg/mL)"
+                                        ShowGrid="{Binding ShowGrid}"
+                                        ShowLegend="{Binding ShowLegend}">
+                            <luminy:BoxPlot Data="{Binding Box1Data}" X="1.0" BoxWidth="{Binding BoxWidth}" Label="Control Group" Color="#FF0284C7" />
+                            <luminy:BoxPlot Data="{Binding Box2Data}" X="2.0" BoxWidth="{Binding BoxWidth}" Label="Placebo Group" Color="#FFF59E0B" />
+                            <luminy:BoxPlot Data="{Binding Box3Data}" X="3.0" BoxWidth="{Binding BoxWidth}" Label="Active Treatment" Color="#FF10B981" />
+                        </luminy:Display>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- ========================================== -->
+            <!-- TAB 7: MATRIX PLOT                         -->
+            <!-- ========================================== -->
+            <TabItem Header="🔲 MatrixPlot">
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left Control Panel -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="MatrixPlot Controls" FontSize="16" FontWeight="Bold" Foreground="#0F172A" />
+                            <TextBlock Text="2D scalar intensity &amp; ripple interference field" FontSize="11" Foreground="#64748B" Margin="0,2,0,16" />
+
+                            <TextBlock Text="Ripple Wave Frequency" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
+                            <Slider Minimum="0.5" Maximum="6.0" Value="{Binding MatrixFrequency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.1" LargeChange="0.5" />
+                            <TextBlock Text="{Binding MatrixFrequency, StringFormat='{}{0:F1} waves'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,20" />
+
+                            <Border Background="#F8FAFC" CornerRadius="6" Padding="12">
+                                <StackPanel>
+                                    <TextBlock Text="ACCELERATION INFO" FontSize="10" FontWeight="Bold" Foreground="#64748B" Margin="0,0,0,6" />
+                                    <TextBlock Text="256-level quantized palette with frozen DirectX SolidColorBrush cache for instant 60 fps rendering." FontSize="11" Foreground="#475569" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Right Display -->
+                    <Border Grid.Column="2" Background="White" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="16">
+                        <luminy:Display Title="2D Heatmap Intensity Ripple Field"
+                                        XLabel="Matrix Column Index (j)"
+                                        YLabel="Matrix Row Index (i)"
+                                        ShowGrid="False"
+                                        ShowLegend="False">
+                            <luminy:MatrixPlot Data="{Binding MatrixData}" Label="Ripple Field" />
+                        </luminy:Display>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
