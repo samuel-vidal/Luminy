@@ -9,12 +9,25 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
     <PackageId>Luminy.Wpf</PackageId>
     <Version>1.0.0</Version>
-    <Authors>Samuel Vidal</Authors>
+    <Title>Luminy.Wpf</Title>
+    <Authors>Samuel Alexandre Vidal</Authors>
+    <Copyright>Copyright (c) 2026 Samuel Alexandre Vidal</Copyright>
     <Description>Enterprise-grade retained-mode WPF plotting controls for .NET 9 — DirectX hardware-accelerated vector graphics.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>WPF;DirectX;DataVisualization;Chart;Plot;Graph;LinePlot;DonutPlot;PointPlot;BarChart;Histogram;BoxPlot;MatrixPlot;Heatmap</PackageTags>
+    <PackageProjectUrl>https://github.com/samuel-vidal/Luminy</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/samuel-vidal/Luminy.git</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>First Release with full 7 plot types parity (LinePlot, DonutPlot, PointPlot, BarChart, HistogramPlot, BoxPlot, MatrixPlot).</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Luminy\Luminy.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

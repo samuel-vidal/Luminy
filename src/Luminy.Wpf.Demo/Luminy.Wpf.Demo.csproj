@@ -8,11 +8,12 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon />
     <StartupObject>Luminy.Wpf.Demo.App</StartupObject>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Luminy.Wpf\Luminy.Wpf.csproj" />
-    <ProjectReference Include="..\Luminy\Luminy.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\" />
+		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
 </Project>
