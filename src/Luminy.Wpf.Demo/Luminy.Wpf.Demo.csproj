@@ -11,9 +11,9 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-	<ItemGroup>
-		<None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\" />
-		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Luminy.Wpf\Luminy.Wpf.csproj" />
+    <ProjectReference Include="..\Luminy\Luminy.csproj" />
+  </ItemGroup>
 
 </Project>
