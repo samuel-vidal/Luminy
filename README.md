@@ -2,7 +2,13 @@
 
 **Elegant SVG math plotting and scientific HTML reports for .NET — zero external dependencies.**
 
+Luminy
 [![NuGet](https://img.shields.io/nuget/v/Luminy.svg)](https://www.nuget.org/packages/Luminy)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
+[![.NET](https://img.shields.io/badge/.NET-9.0-purple.svg)](https://dotnet.microsoft.com/)
+
+Luminy.Wpf
+[![NuGet](https://img.shields.io/nuget/v/Luminy.Wpf.svg)](https://www.nuget.org/packages/Luminy.Wpf)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 [![.NET](https://img.shields.io/badge/.NET-9.0-purple.svg)](https://dotnet.microsoft.com/)
 
