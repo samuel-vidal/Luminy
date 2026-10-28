@@ -6,7 +6,7 @@
 
 ## Visual Preview
 
-![LinePlot Harmonic Signal Analysis](./line_plot.svg)
+![LinePlot Harmonic Signal Analysis](./figures/line_plot.svg)
 
 ---
 

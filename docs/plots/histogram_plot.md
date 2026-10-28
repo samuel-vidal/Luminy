@@ -6,7 +6,7 @@
 
 ## Visual Preview
 
-![HistogramPlot Bimodal Frequency Distribution](./histogram_plot.svg)
+![HistogramPlot Bimodal Frequency Distribution](./figures/histogram_plot.svg)
 
 ---
 

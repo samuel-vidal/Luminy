@@ -6,7 +6,7 @@
 
 ## Visual Preview
 
-![BoxPlot Clinical Biomarker Response](./box_plot.svg)
+![BoxPlot Clinical Biomarker Response](./figures/box_plot.svg)
 
 ---
 

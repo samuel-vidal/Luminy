@@ -6,7 +6,7 @@
 
 ## Visual Preview
 
-![BarChart Quarterly Fiscal Results](./bar_chart.svg)
+![BarChart Quarterly Fiscal Results](./figures/bar_chart.svg)
 
 ---
 

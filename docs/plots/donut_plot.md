@@ -6,7 +6,7 @@
 
 ## Visual Preview
 
-![DonutPlot Platform Market Share](./donut_plot.svg)
+![DonutPlot Platform Market Share](./figures/donut_plot.svg)
 
 ---
 

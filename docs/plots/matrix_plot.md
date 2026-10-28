@@ -6,7 +6,7 @@
 
 ## Visual Preview
 
-![MatrixPlot 2D Intensity Ripple Field](./matrix_plot.svg)
+![MatrixPlot 2D Intensity Ripple Field](./figures/matrix_plot.svg)
 
 ---
 
