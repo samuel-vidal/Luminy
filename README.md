@@ -1,18 +1,25 @@
 # Luminy 🌟
 
-**Elegant SVG math plotting and scientific HTML reports for .NET — zero external dependencies.**
+**Elegant vector mathematical plotting and scientific visualization across .NET Core, WPF DirectX, and React.**
 
-Luminy
-[![NuGet](https://img.shields.io/nuget/v/Luminy.svg)](https://www.nuget.org/packages/Luminy)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 [![.NET](https://img.shields.io/badge/.NET-9.0-purple.svg)](https://dotnet.microsoft.com/)
+[![React](https://img.shields.io/badge/React-18%20%7C%2019-61dafb.svg)](https://react.dev/)
+[![CI](https://github.com/samuel-vidal/Luminy/actions/workflows/dotnet.yml/badge.svg)](https://github.com/samuel-vidal/Luminy/actions)
 
-Luminy.Wpf
-[![NuGet](https://img.shields.io/nuget/v/Luminy.Wpf.svg)](https://www.nuget.org/packages/Luminy.Wpf)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
-[![.NET](https://img.shields.io/badge/.NET-9.0-purple.svg)](https://dotnet.microsoft.com/)
+---
 
-> **Pure Vector Scientific Visualization** — Generate crisp SVG charts and complete HTML research reports with modern, idiomatic C#.
+### 📦 Ecosystem Packages
+
+| Package | Flavor | Version | Target & Platform |
+| :--- | :--- | :--- | :--- |
+| **`Luminy`** | .NET Core / Headless | [![NuGet](https://img.shields.io/nuget/v/Luminy.svg?color=0284c7&label=nuget)](https://www.nuget.org/packages/Luminy) | Cross-platform (.NET 9) SVG & HTML reports |
+| **`Luminy.Wpf`** | Windows Desktop | [![NuGet](https://img.shields.io/nuget/v/Luminy.Wpf.svg?color=0284c7&label=nuget)](https://www.nuget.org/packages/Luminy.Wpf) | WPF / DirectX hardware-accelerated retained-mode graphics |
+| **`luminy-react`** | Web Applications | [![npm](https://img.shields.io/npm/v/luminy-react.svg?color=ea580c&label=npm)](https://www.npmjs.com/package/luminy-react) | Pure React vector plotting (Zero external graphics runtime) |
+
+---
+
+> **Pure Vector Scientific Visualization** — Generate crisp charts and interactive dashboards across backend reporting, desktop clients, and web apps with identical mathematics and styling.
 
 Luminy is a lightweight, standalone .NET library designed for generating high-quality scientific plots, data visualizations, and automated research reports. Built from the ground up for simplicity, performance, and clean ergonomics, Luminy produces vector graphics that remain perfectly sharp at any zoom level, without relying on bulky external graphic packages or native wrapper runtimes.
 
@@ -166,27 +173,28 @@ new ReportBuilder(outputDir, "dashboard.html")
 
 ## 🛠 Installation
 
-### .NET CLI
+### 1. .NET Core (Headless / SVG & Reports)
 ```bash
 dotnet add package Luminy
 ```
 
-### Package Manager
+### 2. WPF (Windows Desktop / DirectX)
 ```bash
-Install-Package Luminy
+dotnet add package Luminy.Wpf
 ```
 
-### Project Reference
-```xml
-<PackageReference Include="Luminy" Version="1.0.0" />
+### 3. React (Web Applications)
+```bash
+npm install luminy-react
 ```
 
 ---
 
 ## 🔧 Requirements
 
-- **.NET 9.0** SDK or later
-- Cross-platform: **Linux**, **Windows**, **macOS**
+- **.NET 9.0** SDK or later (Linux, macOS, Windows)
+- **Node.js 18+** / **React 18+** or **19+** for React web applications
+- Windows 10/11 for WPF desktop applications
 
 ---
 
@@ -197,11 +205,11 @@ This project was developed through human-AI collaboration:
 - **Project Lead & Architect**: Samuel Alexandre Vidal
 - **AI Collaborators**:
   - DeepSeek V3.1
-  - Gemini 3.5
-  - Gemini 3.8
+  - Gemini 3.5 & 3.8
   - GLM 5
+  - Qwen 3.7
 
-The development process featured continuous collaboration between human vision and multiple cutting-edge AI systems, each contributing unique strengths to create a production-quality library.
+The development process features continuous collaboration between human vision and multiple cutting-edge AI systems, each contributing unique strengths to create a production-quality library.
 
 ---
 
