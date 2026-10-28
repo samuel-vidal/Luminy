@@ -52,5 +52,26 @@ namespace Luminy.Wpf
                 yield return (Label, Color ?? defaultColor);
             }
         }
+
+        /// <summary> Requests a visual redraw of the parent display containing this plot series. </summary>
+        public void InvalidatePlot()
+        {
+            var parent = VisualParent as UIElement
+                         ?? VisualTreeHelper.GetParent(this) as UIElement
+                         ?? Parent as UIElement;
+            parent?.InvalidateVisual();
+        }
+
+        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            InvalidatePlot();
+        }
+
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
+        {
+            base.OnVisualParentChanged(oldParent);
+            InvalidatePlot();
+        }
     }
 }

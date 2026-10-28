@@ -27,15 +27,15 @@
                 <TextBlock Text="Hardware-accelerated DirectX plotting" FontSize="12" Foreground="#64748B" Margin="0,4,0,24" />
 
                 <TextBlock Text="Frequency (rad/s)" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
-                <Slider Minimum="0.5" Maximum="6.0" Value="{Binding Frequency, Mode=TwoWay}" SmallChange="0.1" LargeChange="0.5" />
+                <Slider Minimum="0.5" Maximum="6.0" Value="{Binding Frequency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.1" LargeChange="0.5" />
                 <TextBlock Text="{Binding Frequency, StringFormat='{}{0:F1} rad/s'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,16" />
 
                 <TextBlock Text="Amplitude" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
-                <Slider Minimum="0.2" Maximum="3.0" Value="{Binding Amplitude, Mode=TwoWay}" SmallChange="0.1" LargeChange="0.5" />
+                <Slider Minimum="0.2" Maximum="3.0" Value="{Binding Amplitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.1" LargeChange="0.5" />
                 <TextBlock Text="{Binding Amplitude, StringFormat='{}{0:F2}'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,16" />
 
                 <TextBlock Text="Noise Level" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4" />
-                <Slider Minimum="0.0" Maximum="1.0" Value="{Binding Noise, Mode=TwoWay}" SmallChange="0.05" LargeChange="0.2" />
+                <Slider Minimum="0.0" Maximum="1.0" Value="{Binding Noise, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.05" LargeChange="0.2" />
                 <TextBlock Text="{Binding Noise, StringFormat='{}{0:F2}'}" Foreground="#64748B" FontSize="11" Margin="0,2,0,24" />
 
                 <CheckBox Content="Show Grid" IsChecked="{Binding ShowGrid}" Margin="0,0,0,12" />

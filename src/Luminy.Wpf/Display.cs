@@ -138,6 +138,12 @@ namespace Luminy.Wpf
             return finalSize;
         }
 
+        protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
+        {
+            base.OnVisualChildrenChanged(visualAdded, visualRemoved);
+            InvalidateVisual();
+        }
+
         protected override void OnRender(DrawingContext dc)
         {
             base.OnRender(dc);

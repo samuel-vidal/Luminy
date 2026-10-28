@@ -6,7 +6,7 @@
 
 ## Visual Preview
 
-![PointPlot Bivariate Clustering](./point_plot.svg)
+![PointPlot Bivariate Clustering](./figures/point_plot.svg)
 
 ---
 
